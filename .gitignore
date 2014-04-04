@@ -1,0 +1,7 @@
+#Java
+*.class
+*.jar
+
+
+#Mac OS X
+*.DS_Store

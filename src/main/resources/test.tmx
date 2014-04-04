@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="32" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="svalbrd" tilewidth="32" tileheight="32">
+  <image source="tiles.png" trans="ff00ff" width="256" height="256"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztlkELgzAMhbs5hOEuUy/Tkxf//09chQVCSKi8Wg2sh480tDZ59hVdQgiLM4bC0Tul+kT2vUXmSPPL35G7kvcsb9izPVBT9vkyxjyXcVDWo++V7/EU+invEv2drZ9YD9A/svFH6B+NqD1b0qel9pX+fuyclxHtM3W+1ry2HtFP/p6M+tL/mz9mtj73/FP3SdNp3TlEv+w/5X85Rmp68v8VeNJP9xsl9/u3ebnNIPf+k99RJqCmp/O/gn///61UKufwBe4wdT0=
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="32" height="32" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztlsEOgjAMhqcYEyMXhYtw9/0f0ZHYpNTWjhakifuSZitsXZv9DaQUi27jMTpb5WmJe8g2Zmve/i3bkfHvyG/QXnjuybMV5tinY0d8Lm4pOMYlzesH/6rkt4Q16geeX+KW0qP5I83r74WR21tKJP1TfZ8K39NxCThP7X6l99x6S/2g70E4n+p/0seI1nvvX+snrk6p5yz10/w1/dO55cxI+t+DSPVDf1vN+/2btHx2mLf/Qe9WGz5DqkS6/z349//fSqXyO17afAhx
+  </data>
+ </layer>
+</map>
