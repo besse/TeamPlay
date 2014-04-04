@@ -44,7 +44,7 @@ public class GameKeys {
     }
 
     public static boolean isReleased(int key) {
-        return !keys[key];
+        return !keys[key] && previousKeys[key];
     }
 
     public static boolean isPressed(int key) {

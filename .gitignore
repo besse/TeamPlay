@@ -1,7 +1,21 @@
-#Java
+#Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Java
 *.class
 *.jar
 
 
-#Mac OS X
+# Mac OS X
 .DS_Store
+
+# Maven
+log/
+target/

@@ -42,7 +42,6 @@ public class InputProcessor extends InputAdapter {
     @Override
     public boolean keyUp(int k) {
         if(k == Input.Keys.UP){
-            System.out.println("Up is released");
             GameKeys.setKey(GameKeys.UP, false);
         }
         if(k == Input.Keys.LEFT){
