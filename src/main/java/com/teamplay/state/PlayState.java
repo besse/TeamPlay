@@ -1,15 +1,11 @@
 package com.teamplay.state;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.teamplay.data.Level;
 import com.teamplay.managers.GameKeys;
 import com.teamplay.managers.GameStateManager;
+import com.teamplay.player.Player;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,21 +16,22 @@ import com.teamplay.managers.GameStateManager;
  */
 public class PlayState extends GameState {
 
-    private TiledMap tileMap;
+    private Level level;
     private String cameradataString = "";
+    private Player player;
 
+    private int currentFPS = 0;
 
-    private Animation walkAnimation;      // #3
-    private Texture walkSheet;      // #4
-    private TextureRegion[] walkFrames;     // #5
-    private TextureRegion currentFrame;
+    private float worldX = 0;
+    private float worldY = 0;
+
 
     private float stateTime;
 
-    private final float MAX_SPEED = 2.0f;
     private BitmapFont font;
-    private float dx = 0, dy = 0, dz = 1.0f, accel = 0.1f;
-    private OrthogonalTiledMapRenderer tileMapRenderer;
+    private float dx = 0, dy = 0, dz = 1.0f, accel = 20.0f;
+
+    private ShapeRenderer shapeRenderer;
 
 
     public PlayState(GameStateManager gsm) {
@@ -44,97 +41,90 @@ public class PlayState extends GameState {
     @Override
     public void init() {
 
-        walkSheet = new Texture(Gdx.files.internal("manwalking.png"));
-        TextureRegion[][] tmp = TextureRegion.split(walkSheet, 32, 32);
-        // #10
-        walkFrames = new TextureRegion[8];
-        int index = 0;
-        for (int i = 0; i < 8; i++) {
-            walkFrames[index++] = tmp[0][i];
-        }
+        level = new Level("test");
 
-        walkAnimation = new Animation(0.1f, walkFrames);      // #11
         stateTime = 0f;
 
 
-        tileMap = new TmxMapLoader().load("test.tmx");
-
-        tileMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
-
         font = new BitmapFont();
+        player = new Player(160, 120);
+
+        shapeRenderer = new ShapeRenderer();
     }
 
     @Override
     public void update(float dt) {
-        stateTime += dt*dx;
+        currentFPS = (int) (dt * 3600);
+        stateTime += dt;
         handleInput();
         GameKeys.update();
+        player.update(dt);
 
     }
 
     @Override
     public void render() {
 
-        camera.position.x += dx;
-        camera.position.y += dy;
-        tileMapRenderer.setView(camera);
+        camera.position.x = player.getXPos();
+        camera.position.y = player.getYPos();
+        level.getTileMapRenderer().setView(camera);
+
         spriteBatch.setProjectionMatrix(camera.combined);
 
-        camera.update();
-        tileMapRenderer.render();
+        level.getTileMapRenderer().render();
 
         spriteBatch.begin();
+
+
+        camera.update();
+        spriteBatch.draw(player.getCurrentFrame(), player.getXPos(), player.getYPos());
+        spriteBatch.end();
+
+
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(0.5f, 0.5f, 0.5f, 1.0f);
+        shapeRenderer.rect(Math.round(player.getXPos() / 32) * 32, Math.round(player.getYPos() / 32) * 32, 32, 32);
+        shapeRenderer.end();
+
         spriteBatch.setProjectionMatrix(hudCamera.combined);
-        currentFrame = walkAnimation.getKeyFrame(stateTime, true);  // #16
-
-
-        spriteBatch.draw(currentFrame, 160 - 16, 120 - 16);
+        spriteBatch.begin();
         font.draw(spriteBatch, cameradataString, 10, 20);
         spriteBatch.end();
-        cameradataString = "X: " + camera.position.x + ". Y: " + camera.position.y + "\n"
-                + "dx: " + dx;
+
+
+        cameradataString = "X: " + player.getXPos() + ". Y: " + player.getYPos()
+                + " dx: " + dx + " dy: " + dy + "FPS: " + currentFPS;
     }
 
     @Override
     public void handleInput() {
 
         if (GameKeys.isDown(GameKeys.LEFT)) {
-            dx -= accel;
+            player.accelerateX(-accel);
         }
         if (GameKeys.isDown(GameKeys.RIGHT)) {
-            dx += accel;
+            player.accelerateX(accel);
         }
         if (GameKeys.isDown(GameKeys.UP)) {
-            dy += accel;
+            player.accelerateY(accel);
         }
         if (GameKeys.isDown(GameKeys.DOWN)) {
-            dy -= accel;
+            player.accelerateY(-accel);
         }
-        if (dx > MAX_SPEED) {
-            dx = MAX_SPEED;
-        }
-        if (dx < -MAX_SPEED) {
-            dx = -MAX_SPEED;
-        }
-        if (dy > MAX_SPEED) {
-            dy = MAX_SPEED;
-        }
-        if (dy < -MAX_SPEED) {
-            dy = -MAX_SPEED;
-        }
-
 
         if (GameKeys.isReleased(GameKeys.LEFT)) {
-            dx = 0.0f;
+            player.decelerateX();
         }
         if (GameKeys.isReleased(GameKeys.RIGHT)) {
-            dx = 0.0f;
+            player.decelerateX();
+
         }
         if (GameKeys.isReleased(GameKeys.UP)) {
-            dy = 0.0f;
+            player.decelerateY();
         }
         if (GameKeys.isReleased(GameKeys.DOWN)) {
-            dy = 0.0f;
+            player.decelerateY();
         }
 
 
