@@ -38,9 +38,9 @@ public class CollisionManager {
             // Linea up med gränsen vid kollision
             if (dx > 0) {
                 //Todo: fixa bättre player get height
-                player.setxPos(tileToPixel(collidingTile.x) - player.getCurrentFrame().getRegionWidth(), elapsedTime);
+                //player.setxPos(tileToPixel(collidingTile.x) - player.getCurrentFrame().getRegionWidth(), elapsedTime);
             } else if (dx < 0) {
-                player.setxPos(tileToPixel(collidingTile.x + 1), elapsedTime);
+               // player.setxPos(tileToPixel(collidingTile.x + 1), elapsedTime);
             }
             player.collideHorizontal();
         }
@@ -54,9 +54,9 @@ public class CollisionManager {
             // Linea upp med gränsen vid kollision
             if (dy > 0) {
                 //Todo: fixa bättre player get width
-                player.setyPos(tileToPixel(collidingTile.y) - player.getCurrentFrame().getRegionHeight(), elapsedTime);
+                //player.setyPos(tileToPixel(collidingTile.y) - player.getCurrentFrame().getRegionHeight(), elapsedTime);
             } else if (dy < 0) {
-                player.setyPos(tileToPixel(collidingTile.y + 1), elapsedTime);
+                //player.setyPos(tileToPixel(collidingTile.y + 1), elapsedTime);
             }
             player.collideVertical();
         }
