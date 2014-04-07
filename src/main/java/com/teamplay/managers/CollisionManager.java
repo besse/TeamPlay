@@ -78,6 +78,7 @@ public class CollisionManager {
         for (int x = fromTileX; x <= toTileX; x++) {
             for (int y = fromTileY; y <= toTileY; y++) {
 
+                //Todo: kolla här om tilen på positionen som man ska till har attributet non walkable eller så
                 if (x < 0 || x >= level.getLevelWidth() || y < 0 || y >= level.getLevelHeight()) {
 
                     //Oups kollition
