@@ -93,8 +93,7 @@ public class PlayState extends GameState {
         spriteBatch.end();
 
 
-        cameradataString = "X: " + player.getXPos() + ". Y: " + player.getYPos()
-                + " dx: " + dx + " dy: " + dy + "FPS: " + currentFPS;
+        cameradataString =  "FPS: " + currentFPS + " X: " + player.getXPos() + ". Y: " + player.getYPos();
     }
 
     @Override

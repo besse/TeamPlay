@@ -26,25 +26,29 @@ public class Player {
     private float deltaX;
     private float deltaY;
 
-    private Animation walkAnimation;      // #3
-    private Texture walkSheet;      // #4
-    private TextureRegion[] walkFrames;     // #5
+
+    //Graphics and animation;
+
+    private Animation walkAnimation;
+    private Texture walkSheet;
+    private TextureRegion[] walkFrames;
     private TextureRegion currentFrame;
 
 
     public Player(float xPos, float yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
+
         walkSheet = new Texture(Gdx.files.internal("manwalking.png"));
         TextureRegion[][] tmp = TextureRegion.split(walkSheet, 32, 32);
-        // #10
+
         walkFrames = new TextureRegion[8];
         int index = 0;
         for (int i = 0; i < 8; i++) {
             walkFrames[index++] = tmp[0][i];
         }
 
-        walkAnimation = new Animation(0.1f, walkFrames);      // #11
+        walkAnimation = new Animation(0.1f, walkFrames);
     }
 
     public void update(float dt) {
