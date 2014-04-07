@@ -3,6 +3,7 @@ package com.teamplay.state;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.teamplay.data.Level;
+import com.teamplay.managers.CollisionManager;
 import com.teamplay.managers.GameKeys;
 import com.teamplay.managers.GameStateManager;
 import com.teamplay.player.Player;
@@ -20,6 +21,8 @@ public class PlayState extends GameState {
     private String cameradataString = "";
     private Player player;
 
+
+
     private int currentFPS = 0;
 
     private float worldX = 0;
@@ -32,6 +35,7 @@ public class PlayState extends GameState {
     private float dx = 0, dy = 0, dz = 1.0f, accel = 20.0f;
 
     private ShapeRenderer shapeRenderer;
+    private CollisionManager collisionManager;
 
 
     public PlayState(GameStateManager gsm) {
@@ -50,6 +54,8 @@ public class PlayState extends GameState {
         player = new Player(160, 120);
 
         shapeRenderer = new ShapeRenderer();
+
+        collisionManager = new CollisionManager(level);
     }
 
     @Override
@@ -58,13 +64,18 @@ public class PlayState extends GameState {
         stateTime += dt;
         handleInput();
         GameKeys.update();
-        player.update(dt);
+
+        //Updaterar player med collisions..
+        collisionManager.handlePlayerUpdate(player, dt);
+
+        //player.update(dt);
 
     }
 
+
+
     @Override
     public void render() {
-
         camera.position.x = player.getXPos();
         camera.position.y = player.getYPos();
         level.getTileMapRenderer().setView(camera);

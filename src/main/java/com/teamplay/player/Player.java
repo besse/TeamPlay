@@ -57,8 +57,8 @@ public class Player {
             decelerateY();
         }
         elapsedTime += dt;
-
     }
+
 
     public void accelerateX(float amount) {
         accelerateX = true;
@@ -126,6 +126,28 @@ public class Player {
         return yPos;
     }
 
+    public void setxPos(float xPos,float dt) {
+        this.xPos = xPos;
+        if(!accelerateX){
+            decelerateX();
+
+        } if(!accelerateY){
+            decelerateY();
+        }
+        elapsedTime += dt;
+    }
+
+    public void setyPos(float yPos, float dt) {
+        this.yPos = yPos;
+        if(!accelerateX){
+            decelerateX();
+
+        } if(!accelerateY){
+            decelerateY();
+        }
+        elapsedTime += dt;
+    }
+
     @Override
     public String toString() {
         return "Player{" +
@@ -139,5 +161,20 @@ public class Player {
     public TextureRegion getCurrentFrame() {
         return walkAnimation.getKeyFrame(elapsedTime * Math.abs(deltaX/50), true);  // #16
 
+    }
+
+    public float getVelocityX() {
+        return deltaX;
+    }
+
+    public float getVelocityY() {
+        return deltaY;
+    }
+
+    public void collideHorizontal() {
+        deltaX = 0;
+    }
+    public void collideVertical(){
+        deltaY = 0;
     }
 }
