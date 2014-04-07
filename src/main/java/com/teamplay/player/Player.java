@@ -19,9 +19,9 @@ public class Player {
     private boolean accelerateY;
     private float elapsedTime = 0.0f;
 
-    private final static float MAX_SPEED = 100.0f;
+    protected final static float MAX_SPEED = 100.0f;
 
-    private final static float FRICTION = 20.0f;
+    protected final static float FRICTION = 20.0f;
 
     private float deltaX;
     private float deltaY;
@@ -143,5 +143,13 @@ public class Player {
     public TextureRegion getCurrentFrame() {
         return walkAnimation.getKeyFrame(elapsedTime * Math.abs(deltaX/50), true);  // #16
 
+    }
+
+    protected float getDeltaX() {
+        return deltaX;
+    }
+
+    protected float getDeltaY() {
+        return deltaY;
     }
 }
