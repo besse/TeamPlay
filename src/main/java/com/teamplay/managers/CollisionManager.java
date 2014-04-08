@@ -77,9 +77,7 @@ public class CollisionManager {
         // Loopa igenom alla tiles efter en kollision
         for (int x = fromTileX; x <= toTileX; x++) {
             for (int y = fromTileY; y <= toTileY; y++) {
-
-                //Todo: kolla här om tilen på positionen som man ska till har attributet non walkable eller så
-                if (x < 0 || x >= level.getLevelWidth() || y < 0 || y >= level.getLevelHeight()) {
+                if (x < 0 || x >= level.getLevelWidth() || y < 0 || y >= level.getLevelHeight() || !level.isTileWalkable(x,y)) {
 
                     //Oups kollition
                     pointCache.setLocation(x, y);

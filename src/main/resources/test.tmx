@@ -2,6 +2,96 @@
 <map version="1.0" orientation="orthogonal" width="32" height="32" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="svalbrd" tilewidth="32" tileheight="32">
   <image source="tiles.png" trans="ff00ff" width="256" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="walkable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="27">
+   <properties>
+    <property name="walkable" value="false"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="walkable" value="true"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Floor" width="32" height="32">
   <data encoding="base64" compression="zlib">
@@ -15,7 +105,7 @@
  </layer>
  <layer name="Wall" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJztlsEOwyAIQN26y7Jduvay9r7//8TZZCTIYFhcK0l9CUGqIkSIDcEXw8baO1vFafF7ijJH6T52H+XM2A9kd2gvfC+J8y6MsU31QGzOby7YxzWk+YN9U+Jbwz/yB14//OYyovEzpPmPgub25uKp/ml9XzLnqV4DjlO7X2meW2/JH+p7Es6n9b/Ux4zWl96/1k9cnlLPWfKn8Wv1T8eWMz3Vfw085Q/9bZXS98/yfmBK+x/q3SrTt0sVT/dfg6P//zYajf14A6Z2CBc=
+   eJztlsEOwjAIQJkzJkYvul3cTl78/0+0JpIwBOnolmLcSwhlbSmkkK4BgAPEoVtZR2etOD1+myRjkvZtX5LsBPtK7Jbsxe8lcZ6VMbW57pgt+c2F+jjCNH+0T0Z8c1gif+TxxW8uPRnfYJp/r2hpby6R6p/X9z5znus50Dit+9XmpfWe/LG+B+V8Xv+v+hjJ+tL7t/pJylPrOU/+PH6r/vnYc2ak+q9BpPyxv71S+v553g9Kaf9jvXtl+HRpEun+a/Dv/78bG7/AvXYAC/EEMDUIPw==
   </data>
  </layer>
 </map>
