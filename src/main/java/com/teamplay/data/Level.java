@@ -67,7 +67,7 @@ public class Level {
         if(walls != null && walls.getCell(x,y) != null){
             TiledMapTile t = walls.getCell(x,y).getTile();
             if(t != null){
-                Object walkable = t.getProperties().get("walkable");
+                String walkable = t.getProperties().get("walkable", String.class);
                 return walkable == null || ((String) walkable).equalsIgnoreCase("true");
             }
         }

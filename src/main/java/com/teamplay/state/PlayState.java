@@ -46,7 +46,7 @@ public class PlayState extends GameState {
     @Override
     public void init() {
 
-        level = new Level("test");
+        level = new Level("level1");
 
         stateTime = 0f;
 
