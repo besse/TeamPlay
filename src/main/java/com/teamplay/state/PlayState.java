@@ -1,5 +1,6 @@
 package com.teamplay.state;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.teamplay.data.Level;
@@ -67,7 +68,6 @@ public class PlayState extends GameState {
 
         //Updaterar player med collisions..
         collisionManager.handlePlayerUpdate(player, dt);
-
         //player.update(dt);
 
     }
@@ -76,8 +76,10 @@ public class PlayState extends GameState {
 
     @Override
     public void render() {
-        camera.position.x = player.getXPos();
-        camera.position.y = player.getYPos();
+
+        //Uppdatera kameran så att den stannar kvar på banan och inte visar annat bös
+        setCameraPositions(camera, player.getXPos() ,player.getYPos());
+
         level.getTileMapRenderer().setView(camera);
 
         spriteBatch.setProjectionMatrix(camera.combined);
@@ -105,6 +107,19 @@ public class PlayState extends GameState {
 
 
         cameradataString =  "FPS: " + currentFPS + " X: " + player.getXPos() + ". Y: " + player.getYPos();
+    }
+
+    private void setCameraPositions(OrthographicCamera camera, float x, float y) {
+
+        //Ta fram max och min värden för x,y
+        float viewMaxX =  level.getPixelWidth() - (camera.viewportWidth / 2);
+        float viewMinX = 0 + (camera.viewportWidth / 2);
+        float viewMaxY =  level.getPixelHeight() - (camera.viewportHeight / 2);
+        float viewMinY = 0 + (camera.viewportHeight / 2);
+
+        //Updatera kameran med de korrekta värdena
+        camera.position.x = Math.max(viewMinX, Math.min(x, viewMaxX));
+        camera.position.y = Math.max(viewMinY, Math.min(y,viewMaxY));
     }
 
     @Override

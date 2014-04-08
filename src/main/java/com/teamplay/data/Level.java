@@ -17,6 +17,8 @@ public class Level {
     private TiledMap tileMap;
     private int levelHeight;
     private int levelWidth;
+    private int tileWidth;
+    private int tileHeight;
 
     public Level(String name){
         load(name);
@@ -25,8 +27,12 @@ public class Level {
     public void load(String name){
         tileMap = new TmxMapLoader().load(name + ".tmx");
         tileMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
+
         levelHeight = (Integer) tileMap.getProperties().get("height");
         levelWidth = (Integer) tileMap.getProperties().get("height");
+        tileWidth = (Integer) tileMap.getProperties().get("tilewidth");
+        tileHeight = (Integer) tileMap.getProperties().get("tileheight");
+
         tileMap.getProperties().get("width");
         tileMap.getLayers().get("floor");
     }
@@ -35,20 +41,19 @@ public class Level {
         return tileMapRenderer;
     }
 
-
     public int getLevelHeight() {
         return levelHeight;
-    }
-
-    public void setLevelHeight(int levelHeight) {
-        this.levelHeight = levelHeight;
     }
 
     public int getLevelWidth() {
         return levelWidth;
     }
 
-    public void setLevelWidth(int levelWidth) {
-        this.levelWidth = levelWidth;
+    public float getPixelWidth() {
+        return levelWidth * tileWidth;
+    }
+
+    public int getPixelHeight(){
+        return levelHeight * tileHeight;
     }
 }

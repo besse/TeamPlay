@@ -12,23 +12,21 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class Player {
 
-
     private float xPos;
     private float yPos;
     private boolean accelerateX;
     private boolean accelerateY;
-    private float elapsedTime = 0.0f;
-
-    private final static float MAX_SPEED = 100.0f;
-
-    private final static float FRICTION = 20.0f;
 
     private float deltaX;
     private float deltaY;
 
+    private float elapsedTime = 0.0f;
+
+    private final static float MAX_SPEED = 100.0f;
+    private final static float FRICTION = 20.0f;
+
 
     //Graphics and animation;
-
     private Animation walkAnimation;
     private Texture walkSheet;
     private TextureRegion[] walkFrames;
@@ -63,6 +61,10 @@ public class Player {
         elapsedTime += dt;
     }
 
+    public TextureRegion getCurrentFrame() {
+        return walkAnimation.getKeyFrame(elapsedTime * Math.abs(deltaX/50), true);  // #16
+
+    }
 
     public void accelerateX(float amount) {
         accelerateX = true;
@@ -121,7 +123,6 @@ public class Player {
 
     }
 
-
     public float getXPos() {
         return xPos;
     }
@@ -152,21 +153,6 @@ public class Player {
         elapsedTime += dt;
     }
 
-    @Override
-    public String toString() {
-        return "Player{" +
-                "xPos=" + xPos +
-                ", yPos=" + yPos +
-                ", deltaX=" + deltaX +
-                ", deltaY=" + deltaY +
-                '}';
-    }
-
-    public TextureRegion getCurrentFrame() {
-        return walkAnimation.getKeyFrame(elapsedTime * Math.abs(deltaX/50), true);  // #16
-
-    }
-
     public float getVelocityX() {
         return deltaX;
     }
@@ -180,5 +166,15 @@ public class Player {
     }
     public void collideVertical(){
         deltaY = 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "xPos=" + xPos +
+                ", yPos=" + yPos +
+                ", deltaX=" + deltaX +
+                ", deltaY=" + deltaY +
+                '}';
     }
 }
