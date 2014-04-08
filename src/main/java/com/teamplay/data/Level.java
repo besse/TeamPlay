@@ -14,7 +14,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
  */
 public class Level {
 
-    private static final int LAYER_WALL = 2;
+    private static final String LAYER_WALL = "walls";
     private static final int LAYER_FLOOR2 = 1;
     private static final int LAYER_FLOOR = 0;
 
@@ -34,7 +34,7 @@ public class Level {
         tileMap = new TmxMapLoader().load(name + ".tmx");
         tileMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
         levelHeight = (Integer) tileMap.getProperties().get("height");
-        levelWidth = (Integer) tileMap.getProperties().get("height");
+        levelWidth = (Integer) tileMap.getProperties().get("width");
         tileWidth = (Integer) tileMap.getProperties().get("tilewidth");
         tileHeight = (Integer) tileMap.getProperties().get("tileheight");
 
@@ -68,7 +68,7 @@ public class Level {
             TiledMapTile t = walls.getCell(x,y).getTile();
             if(t != null){
                 String walkable = t.getProperties().get("walkable", String.class);
-                return walkable == null || ((String) walkable).equalsIgnoreCase("true");
+                return walkable == null || walkable.equalsIgnoreCase("true");
             }
         }
         return true;
