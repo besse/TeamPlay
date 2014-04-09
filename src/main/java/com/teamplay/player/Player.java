@@ -4,6 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.teamplay.data.Level;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: jonasbirgersson
@@ -11,6 +16,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * Time: 11:14 AM
  */
 public class Player {
+
+
+    //Debug rektanglar
+
+    List<Rectangle> collidableTiles = new ArrayList<Rectangle>();
 
     private float xPos;
     private float yPos;
@@ -24,6 +34,9 @@ public class Player {
 
     private final static float MAX_SPEED = 100.0f;
     private final static float FRICTION = 20.0f;
+
+
+    Rectangle boundingBox;
 
 
     //Graphics and animation;
@@ -47,22 +60,27 @@ public class Player {
         }
 
         walkAnimation = new Animation(0.1f, walkFrames);
+
+        boundingBox = new Rectangle(2, 1, 25, 26);
     }
 
     public void update(float dt) {
+
         xPos += (deltaX * dt);
         yPos += (deltaY * dt);
-        if(!accelerateX){
+
+        if (!accelerateX) {
             decelerateX();
 
-        } if(!accelerateY){
+        }
+        if (!accelerateY) {
             decelerateY();
         }
         elapsedTime += dt;
     }
 
     public TextureRegion getCurrentFrame() {
-        return walkAnimation.getKeyFrame(elapsedTime * Math.abs(deltaX/50), true);  // #16
+        return walkAnimation.getKeyFrame(elapsedTime * Math.abs(deltaX / 50), true);  // #16
 
     }
 
@@ -105,7 +123,7 @@ public class Player {
 
     }
 
-    public void decelerateY(){
+    public void decelerateY() {
         accelerateY = false;
         if (deltaY > 0) {
             deltaY -= FRICTION;
@@ -131,12 +149,13 @@ public class Player {
         return yPos;
     }
 
-    public void setxPos(float xPos,float dt) {
+    public void setxPos(float xPos, float dt) {
         this.xPos = xPos;
-        if(!accelerateX){
+        if (!accelerateX) {
             decelerateX();
 
-        } if(!accelerateY){
+        }
+        if (!accelerateY) {
             decelerateY();
         }
         elapsedTime += dt;
@@ -144,10 +163,11 @@ public class Player {
 
     public void setyPos(float yPos, float dt) {
         this.yPos = yPos;
-        if(!accelerateX){
+        if (!accelerateX) {
             decelerateX();
 
-        } if(!accelerateY){
+        }
+        if (!accelerateY) {
             decelerateY();
         }
         elapsedTime += dt;
@@ -164,8 +184,64 @@ public class Player {
     public void collideHorizontal() {
         deltaX = 0;
     }
-    public void collideVertical(){
+
+    public void collideVertical() {
         deltaY = 0;
+    }
+
+
+    public void checkCollisionWithBlocks(float dt, Level level) {
+        boundingBox.set(xPos + 2, yPos + 1, 25, 26);
+
+        float startX, endX;
+        float startY = boundingBox.getY();
+        float endY = startY + boundingBox.getHeight();
+
+
+        //Horisontell kollisioncheck
+        if (deltaX < 0) {
+            startX = endX = boundingBox.getX() + deltaX * dt;
+        } else {
+            startX = endX = boundingBox.getX() + boundingBox.getWidth() + deltaX * dt;
+        }
+        boundingBox.x += deltaX * dt;
+
+        collidableTiles = (level.getCollidableRectangles(startX, startY, endX, endY));
+        for (Rectangle rectangle : level.getCollidableRectangles(startX, startY, endX, endY)) {
+            if (boundingBox.overlaps(rectangle)) {
+                deltaX = 0;
+                break;
+            }
+        }
+
+        //Vertikal kollisionscheck
+        startX = boundingBox.getX();
+        endX = startX + boundingBox.getWidth();
+        if (deltaY < 0) {
+            startY = endY = boundingBox.getY() + deltaY * dt;
+        } else {
+            startY = endY = boundingBox.getY() + boundingBox.getHeight() + deltaY * dt;
+        }
+
+        boundingBox.y += deltaY * dt;
+
+        collidableTiles.addAll(level.getCollidableRectangles(startX, startY, endX, endY));
+        for (Rectangle rectangle : level.getCollidableRectangles(startX, startY, endX, endY)) {
+            if (boundingBox.overlaps(rectangle)) {
+                deltaY = 0;
+                break;
+            }
+        }
+
+
+    }
+
+    public Rectangle getBoundingBox() {
+        return boundingBox;
+    }
+
+    public List<Rectangle> getCollidableTiles() {
+        return collidableTiles;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.teamplay.state;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.teamplay.data.Level;
 import com.teamplay.managers.CollisionManager;
 import com.teamplay.managers.GameKeys;
@@ -21,7 +22,6 @@ public class PlayState extends GameState {
     private Level level;
     private String cameradataString = "";
     private Player player;
-
 
 
     private int currentFPS = 0;
@@ -67,18 +67,18 @@ public class PlayState extends GameState {
         GameKeys.update();
 
         //Updaterar player med collisions..
-        collisionManager.handlePlayerUpdate(player, dt);
-        //player.update(dt);
+        player.checkCollisionWithBlocks(dt, level);
+        //collisionManager.handlePlayerUpdate(player, dt);
+        player.update(dt);
 
     }
-
 
 
     @Override
     public void render() {
 
         //Uppdatera kameran så att den stannar kvar på banan och inte visar annat bös
-        setCameraPositions(camera, player.getXPos() ,player.getYPos());
+        setCameraPositions(camera, player.getXPos(), player.getYPos());
 
         level.getTileMapRenderer().setView(camera);
 
@@ -97,8 +97,17 @@ public class PlayState extends GameState {
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(0.5f, 0.5f, 0.5f, 1.0f);
-        shapeRenderer.rect(Math.round(player.getXPos() / 32) * 32, Math.round(player.getYPos() / 32) * 32, 32, 32);
+        shapeRenderer.rect(player.getBoundingBox().getX(), player.getBoundingBox().getY(), player.getBoundingBox().getWidth(), player.getBoundingBox().getHeight());
+
+        shapeRenderer.setColor(1.0f, 0.0f, 0.5f, 1.0f);
+
+        for (Rectangle rectangle : player.getCollidableTiles()) {
+            shapeRenderer.rect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
+
+
+        }
         shapeRenderer.end();
+
 
         spriteBatch.setProjectionMatrix(hudCamera.combined);
         spriteBatch.begin();
@@ -106,24 +115,25 @@ public class PlayState extends GameState {
         spriteBatch.end();
 
 
-        cameradataString =  "FPS: " + currentFPS + " X: " + player.getXPos() + ". Y: " + player.getYPos();
+        cameradataString = "FPS: " + currentFPS + " X: " + player.getXPos() + ". Y: " + player.getYPos();
     }
 
     private void setCameraPositions(OrthographicCamera camera, float x, float y) {
 
         //Ta fram max och min värden för x,y
-        float viewMaxX =  level.getPixelWidth() - (camera.viewportWidth / 2);
+        float viewMaxX = level.getPixelWidth() - (camera.viewportWidth / 2);
         float viewMinX = 0 + (camera.viewportWidth / 2);
-        float viewMaxY =  level.getPixelHeight() - (camera.viewportHeight / 2);
+        float viewMaxY = level.getPixelHeight() - (camera.viewportHeight / 2);
         float viewMinY = 0 + (camera.viewportHeight / 2);
 
         //Updatera kameran med de korrekta värdena
         camera.position.x = Math.max(viewMinX, Math.min(x, viewMaxX));
-        camera.position.y = Math.max(viewMinY, Math.min(y,viewMaxY));
+        camera.position.y = Math.max(viewMinY, Math.min(y, viewMaxY));
     }
 
     @Override
     public void handleInput() {
+
 
         if (GameKeys.isDown(GameKeys.LEFT)) {
             player.accelerateX(-accel);
