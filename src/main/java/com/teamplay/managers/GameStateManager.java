@@ -2,6 +2,7 @@ package com.teamplay.managers;
 
 import com.teamplay.Game;
 import com.teamplay.state.GameState;
+import com.teamplay.state.MenuState;
 import com.teamplay.state.PlayState;
 
 /**
@@ -18,7 +19,6 @@ public class GameStateManager {
     private GameState currentGameState;
 
 
-
     public static final int MENU = 0;
     public static final int PLAY = 102;
 
@@ -29,22 +29,22 @@ public class GameStateManager {
     }
 
     public void setState(int state) {
-        if(currentGameState != null) {
+        if (currentGameState != null) {
             currentGameState.dispose();
         }
-        if(state==MENU){
-            //Switch to menu state
-        } else if(state== PLAY){
-           currentGameState = new PlayState(this);
+        if (state == MENU) {
+            currentGameState = new MenuState(this);
+        } else if (state == PLAY) {
+            currentGameState = new PlayState(this);
         }
 
     }
 
-    public void update(float dt){
+    public void update(float dt) {
         currentGameState.update(dt);
     }
 
-    public void draw(){
+    public void draw() {
         currentGameState.render();
     }
 

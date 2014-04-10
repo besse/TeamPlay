@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamplay.Game;
 import com.teamplay.managers.GameStateManager;
+import com.teamplay.managers.ResourceManager;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,6 +19,9 @@ public abstract class GameState {
     protected Game game;
 
 
+    protected ResourceManager resourceManager;
+
+
     protected SpriteBatch spriteBatch;
     protected OrthographicCamera camera;
     protected OrthographicCamera hudCamera;
@@ -30,6 +34,7 @@ public abstract class GameState {
         this.spriteBatch = game.getSpriteBatch();
         this.camera = game.getCamera();
         this.hudCamera = game.getHudCamera();
+        this.resourceManager = game.getResourceManager();
 
         init();
 

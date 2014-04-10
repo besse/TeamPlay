@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamplay.managers.GameStateManager;
 import com.teamplay.managers.InputProcessor;
+import com.teamplay.managers.ResourceManager;
 
 /**
  * Main game container.
@@ -27,10 +28,14 @@ public class Game implements ApplicationListener {
     private GameStateManager gameStateManager;
     private OrthographicCamera camera;
     private OrthographicCamera hudCamera;
+    private ResourceManager resourceManager;
 
 
     @Override
     public void create() {
+
+        resourceManager = new ResourceManager();
+
         spriteBatch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.GREEN);
@@ -88,5 +93,9 @@ public class Game implements ApplicationListener {
 
     public OrthographicCamera getHudCamera() {
         return hudCamera;
+    }
+
+    public ResourceManager getResourceManager(){
+        return resourceManager;
     }
 }

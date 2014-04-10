@@ -1,5 +1,6 @@
 package com.teamplay.state;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -26,16 +27,8 @@ public class PlayState extends GameState {
     private Player player;
 
 
-    private int currentFPS = 0;
-
-    private float worldX = 0;
-    private float worldY = 0;
-
-
-    private float stateTime;
-
     private BitmapFont font;
-    private float dx = 0, dy = 0, dz = 1.0f, accel = 20.0f;
+    private float accel = 20.0f;
 
     private ShapeRenderer shapeRenderer;
     private CollisionManager collisionManager;
@@ -50,9 +43,6 @@ public class PlayState extends GameState {
 
         level = new Level("level1");
 
-        stateTime = 0f;
-
-
         font = new BitmapFont();
         player = new Player(160, 120);
 
@@ -63,18 +53,15 @@ public class PlayState extends GameState {
 
     @Override
     public void update(float dt) {
-        currentFPS = (int) (dt * 3600);
-        stateTime += dt;
+
         handleInput();
         GameKeys.update();
 
         //Updaterar player med collisions..
         player.checkCollisionWithBlocks(dt, level);
-        //collisionManager.handlePlayerUpdate(player, dt);
         player.update(dt);
 
     }
-
 
     @Override
     public void render() {
@@ -129,7 +116,7 @@ public class PlayState extends GameState {
         spriteBatch.end();
 
 
-        cameradataString = "FPS: " + currentFPS + " X: " + player.getXPos() + ". Y: " + player.getYPos();
+        cameradataString = "FPS: " + Gdx.graphics.getFramesPerSecond() + " X: " + player.getXPos() + ". Y: " + player.getYPos();
     }
 
     private void drawHealthBar(ShapeRenderer sr, Player p) {
@@ -137,9 +124,9 @@ public class PlayState extends GameState {
         float height = 3.0f;
         float healthPercent = p.getHealthPercent();
 
-        float startX = (p.getBoundingBox().getX() + (p.getBoundingBox().getWidth() / 2)) - (length/2);
+        float startX = (p.getBoundingBox().getX() + (p.getBoundingBox().getWidth() / 2)) - (length / 2);
         float startY = p.getYPos() + p.getCurrentFrame().getRegionHeight();
-        float lifeBarLength = Math.max(2,length * healthPercent);
+        float lifeBarLength = Math.max(2, length * healthPercent);
 
 
         sr.begin(ShapeRenderer.ShapeType.Filled);
@@ -147,14 +134,14 @@ public class PlayState extends GameState {
         sr.rect(startX, startY, length, height);
         sr.end();
         sr.begin(ShapeRenderer.ShapeType.Line);
-        if(healthPercent >= .6f){
+        if (healthPercent >= .6f) {
             sr.setColor(Color.GREEN);
-        }else if(healthPercent >=0.3f){
+        } else if (healthPercent >= 0.3f) {
             sr.setColor(Color.YELLOW);
-        }else{
+        } else {
             sr.setColor(Color.RED);
         }
-        sr.line(startX + 1, startY + height - 1, startX + lifeBarLength - 1, startY + height -1);
+        sr.line(startX + 1, startY + height - 1, startX + lifeBarLength - 1, startY + height - 1);
         sr.end();
     }
 

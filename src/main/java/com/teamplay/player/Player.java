@@ -82,7 +82,7 @@ public class Player {
     }
 
     public TextureRegion getCurrentFrame() {
-        return walkAnimation.getKeyFrame(elapsedTime * Math.abs(deltaX / 50), true);  // #16
+        return walkAnimation.getKeyFrame(xPos/70, true);  // #16
 
     }
 
