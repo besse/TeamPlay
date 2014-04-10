@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.teamplay.data.Level;
+import com.teamplay.util.GameConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +32,6 @@ public class Player {
     private float deltaY;
 
     private float elapsedTime = 0.0f;
-
-    private final static float MAX_SPEED = 75.0f;
-    private final static float MIN_SPEED = 10.0f;
-    private final static float FRICTION = 20.0f;
-    private static final float INIT_HEALTH = 100f;
-    private static final float MAX_HEALTH = 100f;
-
 
 
     Rectangle boundingBox;
@@ -69,7 +63,7 @@ public class Player {
 
         boundingBox = new Rectangle(2, 1, 25, 26);
 
-        this.health = INIT_HEALTH;
+        this.health = GameConstants.PLAYER_INIT_HEALTH;
     }
 
     public void update(float dt) {
@@ -95,10 +89,10 @@ public class Player {
     public void accelerateX(float amount) {
         accelerateX = true;
         deltaX += amount;
-        if (deltaX > MAX_SPEED) {
-            deltaX = MAX_SPEED;
-        } else if (deltaX < -MAX_SPEED) {
-            deltaX = -MAX_SPEED;
+        if (deltaX > GameConstants.PLAYER_MAX_SPEED) {
+            deltaX = GameConstants.PLAYER_MAX_SPEED;
+        } else if (deltaX < -GameConstants.PLAYER_MAX_SPEED) {
+            deltaX = -GameConstants.PLAYER_MAX_SPEED;
         }
 
     }
@@ -106,10 +100,10 @@ public class Player {
     public void accelerateY(float amount) {
         accelerateY = true;
         deltaY += amount;
-        if (deltaY > MAX_SPEED) {
-            deltaY = MAX_SPEED;
-        } else if (deltaY < -MAX_SPEED) {
-            deltaY = -MAX_SPEED;
+        if (deltaY > GameConstants.PLAYER_MAX_SPEED) {
+            deltaY = GameConstants.PLAYER_MAX_SPEED;
+        } else if (deltaY < -GameConstants.PLAYER_MAX_SPEED) {
+            deltaY = -GameConstants.PLAYER_MAX_SPEED;
         }
 
     }
@@ -117,13 +111,13 @@ public class Player {
     public void decelerateX() {
         accelerateX = false;
         if (deltaX > 0) {
-            deltaX -= FRICTION;
+            deltaX -= GameConstants.FRICTION;
             if (deltaX < 0) {
                 deltaX = 0;
             }
         }
         if (deltaX < 0) {
-            deltaX += FRICTION;
+            deltaX += GameConstants.FRICTION;
             if (deltaX > 0) {
                 deltaX = 0;
             }
@@ -134,13 +128,13 @@ public class Player {
     public void decelerateY() {
         accelerateY = false;
         if (deltaY > 0) {
-            deltaY -= FRICTION;
+            deltaY -= GameConstants.FRICTION;
             if (deltaY < 0) {
                 deltaY = 0;
             }
         }
         if (deltaY < 0) {
-            deltaY += FRICTION;
+            deltaY += GameConstants.FRICTION;
             if (deltaY > 0) {
                 deltaY = 0;
             }
@@ -253,11 +247,11 @@ public class Player {
     }
 
     public void increaseSpeed(float s){
-        this.speed =  (speed + s) >= MAX_SPEED ? speed + s : MAX_SPEED;
+        this.speed =  (speed + s) >= GameConstants.PLAYER_MAX_SPEED ? speed + s : GameConstants.PLAYER_MAX_SPEED;
     }
 
     public void decreaseSpeed(float s){
-        this.speed =  (speed - s) <= MIN_SPEED ? speed - s : MIN_SPEED;
+        this.speed =  (speed - s) <= GameConstants.PLAYER_MIN_SPEED ? speed - s : GameConstants.PLAYER_MIN_SPEED;
     }
 
     public float getSpeed(){
@@ -265,7 +259,7 @@ public class Player {
     }
 
     public float getHealthPercent(){
-        return  this.health / MAX_HEALTH;
+        return  this.health / GameConstants.PLAYER_MAX_HEALTH;
     }
 
     public void increaseHealth(int h) {
