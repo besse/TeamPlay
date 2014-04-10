@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.teamplay.entity.ButtonEntity;
 import com.teamplay.entity.DoorEntity;
 import com.teamplay.entity.Entity;
+import com.teamplay.navigation.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,7 @@ public class Level {
             int y = (Integer) mapObject.getProperties().get("y");
             if (type.equals("door")) {
 
-                String direction = (String) mapObject.getProperties().get("direction");
+                Direction direction = Direction.fromString((String) mapObject.getProperties().get("direction"));
                 DoorEntity doorEntity = new DoorEntity(x, y, direction);
                 levelObjects.add(doorEntity);
 

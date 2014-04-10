@@ -1,8 +1,7 @@
 package com.teamplay.entity;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.teamplay.navigation.Direction;
 
 /**
  * Created for TeamPlay
@@ -10,31 +9,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  * Date: 2014-04-09
  * Time: 7:35 PM
  */
-public class DoorEntity implements Entity {
+public class DoorEntity extends DrawableEntity {
 
-    private final float xPos;
-    private final float yPos;
     private boolean open;
     private float timeToOpen = 5.0f;
     private float elapsedOpeningTime = 0.0f;
-    private String direction;
 
-    Texture texture;
-    Sprite sprite;
+    private static final String TEXTURE_FILE_NAME = "door.png";
 
-
-    public DoorEntity(int x, int y, String direction) {
-        this.xPos = x;
-        this.yPos = y;
-        this.direction = direction;
-
-        texture = new Texture(Gdx.files.internal("door.png"));
-        sprite = new Sprite(texture);
-        sprite.setPosition(xPos, yPos);
-        if (direction.equals("west")) {
-
-            sprite.setRotation(90.0f);
-        }
+    public DoorEntity(int x, int y, Direction direction) {
+        super(x, y, direction, TEXTURE_FILE_NAME);
 
     }
 
@@ -52,18 +36,7 @@ public class DoorEntity implements Entity {
     public Texture getCurrentFrame() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
-
-    public Sprite getSprite() {
-        return sprite;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public float getX() {
-        return xPos;
-    }
-
-    @Override
-    public float getY() {
-        return yPos;
-    }
 }
+
+
+
