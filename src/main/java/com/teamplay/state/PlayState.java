@@ -8,8 +8,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.teamplay.data.Level;
 import com.teamplay.entity.Entity;
 import com.teamplay.managers.CollisionManager;
-import com.teamplay.managers.GameKeys;
+import com.teamplay.managers.GameKey;
 import com.teamplay.managers.GameStateManager;
+import static com.teamplay.managers.InputProcessor.isDown;
+import static com.teamplay.managers.InputProcessor.isPressed;
+import static com.teamplay.managers.InputProcessor.isReleased;
+
+import com.teamplay.managers.InputProcessor;
 import com.teamplay.player.Player;
 
 /**
@@ -66,7 +71,6 @@ public class PlayState extends GameState {
         currentFPS = (int) (dt * 3600);
         stateTime += dt;
         handleInput();
-        GameKeys.update();
 
         //Updaterar player med collisions..
         player.checkCollisionWithBlocks(dt, level);
@@ -174,38 +178,38 @@ public class PlayState extends GameState {
     @Override
     public void handleInput() {
 
-
-        if (GameKeys.isDown(GameKeys.LEFT)) {
+        if (isDown(GameKey.LEFT)){
             player.accelerateX(-accel);
         }
-        if (GameKeys.isDown(GameKeys.RIGHT)) {
+        if (isDown(GameKey.RIGHT)) {
             player.accelerateX(accel);
         }
-        if (GameKeys.isDown(GameKeys.UP)) {
+        if (isDown(GameKey.UP)) {
             player.accelerateY(accel);
         }
-        if (GameKeys.isDown(GameKeys.DOWN)) {
+        if (isDown(GameKey.DOWN)) {
             player.accelerateY(-accel);
         }
 
-        if (GameKeys.isReleased(GameKeys.LEFT)) {
+        if (isReleased(GameKey.LEFT)) {
             player.decelerateX();
         }
-        if (GameKeys.isReleased(GameKeys.RIGHT)) {
+        if (isReleased(GameKey.RIGHT)) {
             player.decelerateX();
 
         }
-        if (GameKeys.isReleased(GameKeys.UP)) {
+        if (isReleased(GameKey.UP)) {
             player.decelerateY();
         }
-        if (GameKeys.isReleased(GameKeys.DOWN)) {
+        if (isReleased(GameKey.DOWN)) {
             player.decelerateY();
         }
 
-        if (GameKeys.isReleased(GameKeys.SPACE)) {
+        if (isReleased(GameKey.SPACE)) {
             System.out.println("Hurting the little fellah");
             player.decreaseHealth(5.0f);
         }
+        InputProcessor.refresh();
 
     }
 
