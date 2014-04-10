@@ -1,7 +1,9 @@
 package com.teamplay.managers;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,66 +14,48 @@ import com.badlogic.gdx.InputAdapter;
  */
 public class InputProcessor extends InputAdapter {
 
+    private static final Set<GameKey> downKeys = new HashSet<GameKey>();
+    private static final Set<GameKey> pressedKeys= new HashSet<GameKey>();
+    private static final Set<GameKey> releasedKeys = new HashSet<GameKey>();
+
+
     @Override
-    public boolean keyDown(int k) {
-        if(k == Input.Keys.UP){
-            GameKeys.setKey(GameKeys.UP, true);
+    public boolean keyDown(int keycode) {
+        if (isValidKey(keycode)){
+            GameKey key = GameKey.fromKeycode(keycode);
+            downKeys.add(key);
+            pressedKeys.add(key);
         }
-        if(k == Input.Keys.LEFT){
-            GameKeys.setKey(GameKeys.LEFT, true);
-        }
-        if(k == Input.Keys.DOWN){
-            GameKeys.setKey(GameKeys.DOWN, true);
-        }
-        if(k == Input.Keys.RIGHT){
-            GameKeys.setKey(GameKeys.RIGHT, true);
-        }
-        if(k == Input.Keys.SHIFT_LEFT || k == Input.Keys.SHIFT_RIGHT){
-            GameKeys.setKey(GameKeys.SHIFT, true);
-        }
-        if(k == Input.Keys.ESCAPE){
-            GameKeys.setKey(GameKeys.ESCAPE, true);
-        }
-        if(k == Input.Keys.ENTER){
-            GameKeys.setKey(GameKeys.ENTER, true);
-        }
-        if(k == Input.Keys.SPACE){
-            GameKeys.setKey(GameKeys.SPACE, true);
-        }
-
-
         return true;
     }
 
-    @Override
-    public boolean keyUp(int k) {
-        if(k == Input.Keys.UP){
-            GameKeys.setKey(GameKeys.UP, false);
-        }
-        if(k == Input.Keys.LEFT){
-            GameKeys.setKey(GameKeys.LEFT, false);
-        }
-        if(k == Input.Keys.DOWN){
-            GameKeys.setKey(GameKeys.DOWN, false);
-        }
-        if(k == Input.Keys.RIGHT){
-            GameKeys.setKey(GameKeys.RIGHT, false);
-        }
-        if(k == Input.Keys.SHIFT_LEFT || k == Input.Keys.SHIFT_RIGHT){
-            GameKeys.setKey(GameKeys.SHIFT, false);
-        }
-        if(k == Input.Keys.ESCAPE){
-            GameKeys.setKey(GameKeys.ESCAPE, false);
-        }
-        if(k == Input.Keys.ENTER){
-            GameKeys.setKey(GameKeys.ENTER, false);
-        }
-        if(k == Input.Keys.SPACE){
-            GameKeys.setKey(GameKeys.SPACE, false);
-        }
+    private boolean isValidKey(int keycode) {
+        return GameKey.isValid(keycode);
+    }
 
+    @Override
+    public boolean keyUp(int keycode) {
+        if (isValidKey(keycode)){
+            GameKey key = GameKey.fromKeycode(keycode);
+            downKeys.remove(key);
+            releasedKeys.add(key);
+        }
         return true;
     }
 
+    public static boolean isDown(GameKey key) {
+        return downKeys.contains(key);
+    }
+    public static boolean isReleased(GameKey key) {
+        return releasedKeys.contains(key);
+    }
+    public static boolean isPressed(GameKey key) {
+        return pressedKeys.contains(key);
+    }
 
+
+    public static void refresh(){
+        pressedKeys.clear();
+        releasedKeys.clear();
+    }
 }
