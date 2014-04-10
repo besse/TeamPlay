@@ -32,8 +32,12 @@ public class Player {
 
     private float elapsedTime = 0.0f;
 
-    private final static float MAX_SPEED = 100.0f;
+    private final static float MAX_SPEED = 75.0f;
+    private final static float MIN_SPEED = 10.0f;
     private final static float FRICTION = 20.0f;
+    private static final float INIT_HEALTH = 100f;
+    private static final float MAX_HEALTH = 100f;
+
 
 
     Rectangle boundingBox;
@@ -45,6 +49,8 @@ public class Player {
     private TextureRegion[] walkFrames;
     private TextureRegion currentFrame;
 
+    private float speed;
+    private float health;
 
     public Player(float xPos, float yPos) {
         this.xPos = xPos;
@@ -62,6 +68,8 @@ public class Player {
         walkAnimation = new Animation(0.1f, walkFrames);
 
         boundingBox = new Rectangle(2, 1, 25, 26);
+
+        this.health = INIT_HEALTH;
     }
 
     public void update(float dt) {
@@ -244,6 +252,30 @@ public class Player {
         return collidableTiles;
     }
 
+    public void increaseSpeed(float s){
+        this.speed =  (speed + s) >= MAX_SPEED ? speed + s : MAX_SPEED;
+    }
+
+    public void decreaseSpeed(float s){
+        this.speed =  (speed - s) <= MIN_SPEED ? speed - s : MIN_SPEED;
+    }
+
+    public float getSpeed(){
+        return this.speed;
+    }
+
+    public float getHealthPercent(){
+        return  this.health / MAX_HEALTH;
+    }
+
+    public void increaseHealth(int h) {
+        this.health =+ h;
+    }
+
+    public void decreaseHealth(float h) {
+        this.health = (health - h) < 0 ? 0 : health - h;
+    }
+
     @Override
     public String toString() {
         return "Player{" +
@@ -253,4 +285,6 @@ public class Player {
                 ", deltaY=" + deltaY +
                 '}';
     }
+
+
 }
