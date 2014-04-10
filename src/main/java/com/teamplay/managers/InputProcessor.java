@@ -35,6 +35,10 @@ public class InputProcessor extends InputAdapter {
         if(k == Input.Keys.ENTER){
             GameKeys.setKey(GameKeys.ENTER, true);
         }
+        if(k == Input.Keys.SPACE){
+            GameKeys.setKey(GameKeys.SPACE, true);
+        }
+
 
         return true;
     }
@@ -61,6 +65,9 @@ public class InputProcessor extends InputAdapter {
         }
         if(k == Input.Keys.ENTER){
             GameKeys.setKey(GameKeys.ENTER, false);
+        }
+        if(k == Input.Keys.SPACE){
+            GameKeys.setKey(GameKeys.SPACE, false);
         }
 
         return true;
