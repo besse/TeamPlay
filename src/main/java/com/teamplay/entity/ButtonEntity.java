@@ -3,23 +3,27 @@ package com.teamplay.entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Created with IntelliJ IDEA.
+ * Created for TeamPlay
  * User: jonasbirgersson
- * Date: 2014-04-02
- * Time: 8:33 AM
- * To change this template use File | Settings | File Templates.
+ * Date: 2014-04-10
+ * Time: 10:21 AM
  */
-public class TriggerPlateEntity implements Entity {
+public class ButtonEntity implements Entity {
 
-    private boolean active;
-    private List<Entity> connectedObjects;
+    private float xPos;
+    private float yPos;
 
-    public TriggerPlateEntity(){
-        connectedObjects = new ArrayList<Entity>();
+    Texture texture;
+    Sprite sprite;
+
+    public ButtonEntity(float x, float y) {
+        this.xPos = x;
+        this.yPos = y;
+        texture = new Texture("button.png");
+
+        sprite = new Sprite(texture);
+        sprite.setPosition(xPos, yPos);
     }
 
     @Override
@@ -27,16 +31,14 @@ public class TriggerPlateEntity implements Entity {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
     public void trigger() {
-        active = !active;
-        if(isActive()){
-           updateConnectedObjects();
-        }
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public Sprite getSprite() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return sprite;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
@@ -53,15 +55,4 @@ public class TriggerPlateEntity implements Entity {
     public float getX() {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void updateConnectedObjects(){
-        for (Entity connectedObject : connectedObjects) {
-            connectedObject.trigger();
-        }
-    }
-
 }

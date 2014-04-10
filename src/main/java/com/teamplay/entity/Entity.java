@@ -1,5 +1,8 @@
 package com.teamplay.entity;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 /**
  * Created with IntelliJ IDEA.
  * User: jonasbirgersson
@@ -9,9 +12,17 @@ package com.teamplay.entity;
  */
 public interface Entity {
 
-    public void update();
+
+    public void update(float dt);
 
     public void trigger();
 
 
+    public Sprite getSprite();
+
+    public Texture getCurrentFrame();
+
+    float getY();
+
+    float getX();
 }

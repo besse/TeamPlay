@@ -1,11 +1,16 @@
 package com.teamplay.data;
 
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.teamplay.entity.ButtonEntity;
+import com.teamplay.entity.DoorEntity;
+import com.teamplay.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +26,8 @@ public class Level {
     private static final String LAYER_WALL = "walls";
     private static final int LAYER_FLOOR2 = 1;
     private static final int LAYER_FLOOR = 0;
+
+    private List<Entity> levelObjects;
 
     private OrthogonalTiledMapRenderer tileMapRenderer;
 
@@ -44,10 +51,51 @@ public class Level {
 
         tileMap.getProperties().get("width");
         tileMap.getLayers().get("floor");
+
+        loadLevelObjects();
+    }
+
+    private void loadLevelObjects() {
+        levelObjects = new ArrayList<Entity>();
+        MapLayer objectLayer = tileMap.getLayers().get("objects");
+
+        /*
+
+         3 typer av objekt.
+
+         button, door, start
+          */
+
+        for (MapObject mapObject : objectLayer.getObjects()) {
+
+            String type = (String) mapObject.getProperties().get("type");
+            int x = (Integer) mapObject.getProperties().get("x");
+            int y = (Integer) mapObject.getProperties().get("y");
+            if (type.equals("door")) {
+
+                String direction = (String) mapObject.getProperties().get("direction");
+                DoorEntity doorEntity = new DoorEntity(x, y, direction);
+                levelObjects.add(doorEntity);
+
+
+            } else if(type.equals("button")){
+                ButtonEntity buttonEntity = new ButtonEntity(x,y);
+                levelObjects.add(buttonEntity);
+
+            }
+            String name = (String) mapObject.getProperties().get("name");
+
+
+        }
+
     }
 
     public OrthogonalTiledMapRenderer getTileMapRenderer() {
         return tileMapRenderer;
+    }
+
+    public List<Entity> getLevelObjects() {
+        return levelObjects;
     }
 
     public int getLevelHeight() {

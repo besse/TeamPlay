@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.teamplay.data.Level;
+import com.teamplay.entity.Entity;
 import com.teamplay.managers.CollisionManager;
 import com.teamplay.managers.GameKeys;
 import com.teamplay.managers.GameStateManager;
@@ -86,11 +87,16 @@ public class PlayState extends GameState {
 
         level.getTileMapRenderer().render();
 
+
         spriteBatch.begin();
 
 
         camera.update();
         spriteBatch.draw(player.getCurrentFrame(), player.getXPos(), player.getYPos());
+        for (Entity currentLevelObject : level.getLevelObjects()) {
+            currentLevelObject.getSprite().draw(spriteBatch);
+        }
+
         spriteBatch.end();
 
 

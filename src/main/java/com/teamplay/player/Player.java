@@ -194,25 +194,8 @@ public class Player {
         boundingBox.set(xPos + 2, yPos + 1, 25, 26);
 
         float startX, endX;
-        float startY = boundingBox.getY();
-        float endY = startY + boundingBox.getHeight();
-
-
-        //Horisontell kollisioncheck
-        if (deltaX < 0) {
-            startX = endX = boundingBox.getX() + deltaX * dt;
-        } else {
-            startX = endX = boundingBox.getX() + boundingBox.getWidth() + deltaX * dt;
-        }
-        boundingBox.x += deltaX * dt;
-
-        collidableTiles = (level.getCollidableRectangles(startX, startY, endX, endY));
-        for (Rectangle rectangle : level.getCollidableRectangles(startX, startY, endX, endY)) {
-            if (boundingBox.overlaps(rectangle)) {
-                deltaX = 0;
-                break;
-            }
-        }
+        float startY;
+        float endY;
 
         //Vertikal kollisionscheck
         startX = boundingBox.getX();
@@ -228,13 +211,36 @@ public class Player {
         collidableTiles.addAll(level.getCollidableRectangles(startX, startY, endX, endY));
         for (Rectangle rectangle : level.getCollidableRectangles(startX, startY, endX, endY)) {
             if (boundingBox.overlaps(rectangle)) {
+                System.out.println("Vertikal check dy blir 0");
                 deltaY = 0;
                 break;
             }
         }
 
 
+        //Horisontell kollisioncheck
+
+        startY = boundingBox.getY();
+        endY = startY + boundingBox.getHeight();
+
+        if (deltaX < 0) {
+            startX = endX = boundingBox.getX() + deltaX * dt;
+        } else {
+            startX = endX = boundingBox.getX() + boundingBox.getWidth() + deltaX * dt;
+        }
+        boundingBox.x += deltaX * dt;
+
+        collidableTiles = (level.getCollidableRectangles(startX, startY, endX, endY));
+        for (Rectangle rectangle : level.getCollidableRectangles(startX, startY, endX, endY)) {
+            if (boundingBox.overlaps(rectangle)) {
+                System.out.println("Horisontell check dx blir 0");
+
+                deltaX = 0;
+                break;
+            }
+        }
     }
+
 
     public Rectangle getBoundingBox() {
         return boundingBox;
