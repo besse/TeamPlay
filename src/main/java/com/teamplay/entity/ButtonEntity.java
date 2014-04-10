@@ -2,6 +2,7 @@ package com.teamplay.entity;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.teamplay.navigation.Direction;
 
 /**
  * Created for TeamPlay
@@ -9,21 +10,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  * Date: 2014-04-10
  * Time: 10:21 AM
  */
-public class ButtonEntity implements Entity {
+public class ButtonEntity extends DrawableEntity {
 
-    private float xPos;
-    private float yPos;
+    private static final String TEXTURE_FILE_NAME = "button.png";
 
-    Texture texture;
-    Sprite sprite;
-
-    public ButtonEntity(float x, float y) {
-        this.xPos = x;
-        this.yPos = y;
-        texture = new Texture("button.png");
-
-        sprite = new Sprite(texture);
-        sprite.setPosition(xPos, yPos);
+    public ButtonEntity(int x, int y) {
+        super(x, y, Direction.EAST, TEXTURE_FILE_NAME);
     }
 
     @Override
@@ -37,22 +29,7 @@ public class ButtonEntity implements Entity {
     }
 
     @Override
-    public Sprite getSprite() {
-        return sprite;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
     public Texture getCurrentFrame() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public float getY() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public float getX() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
