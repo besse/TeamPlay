@@ -1,5 +1,6 @@
 package com.teamplay.state;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -104,7 +105,14 @@ public class PlayState extends GameState {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(0.5f, 0.5f, 0.5f, 1.0f);
         shapeRenderer.rect(player.getBoundingBox().getX(), player.getBoundingBox().getY(), player.getBoundingBox().getWidth(), player.getBoundingBox().getHeight());
+        shapeRenderer.end();
 
+        //Draw health bar
+        drawHealthBar(shapeRenderer, player);
+
+
+        shapeRenderer.end();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(1.0f, 0.0f, 0.5f, 1.0f);
 
         for (Rectangle rectangle : player.getCollidableTiles()) {
@@ -122,6 +130,32 @@ public class PlayState extends GameState {
 
 
         cameradataString = "FPS: " + currentFPS + " X: " + player.getXPos() + ". Y: " + player.getYPos();
+    }
+
+    private void drawHealthBar(ShapeRenderer sr, Player p) {
+        float length = 25.0f;
+        float height = 3.0f;
+        float healthPercent = p.getHealthPercent();
+
+        float startX = (p.getBoundingBox().getX() + (p.getBoundingBox().getWidth() / 2)) - (length/2);
+        float startY = p.getYPos() + p.getCurrentFrame().getRegionHeight();
+        float lifeBarLength = Math.max(2,length * healthPercent);
+
+
+        sr.begin(ShapeRenderer.ShapeType.Filled);
+        sr.setColor(Color.BLACK);
+        sr.rect(startX, startY, length, height);
+        sr.end();
+        sr.begin(ShapeRenderer.ShapeType.Line);
+        if(healthPercent >= .6f){
+            sr.setColor(Color.GREEN);
+        }else if(healthPercent >=0.3f){
+            sr.setColor(Color.YELLOW);
+        }else{
+            sr.setColor(Color.RED);
+        }
+        sr.line(startX + 1, startY + height - 1, startX + lifeBarLength - 1, startY + height -1);
+        sr.end();
     }
 
     private void setCameraPositions(OrthographicCamera camera, float x, float y) {
@@ -168,6 +202,10 @@ public class PlayState extends GameState {
             player.decelerateY();
         }
 
+        if (GameKeys.isReleased(GameKeys.SPACE)) {
+            System.out.println("Hurting the little fellah");
+            player.decreaseHealth(5.0f);
+        }
 
     }
 
