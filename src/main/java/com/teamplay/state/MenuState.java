@@ -2,6 +2,8 @@ package com.teamplay.state;
 
 import com.teamplay.data.Level;
 import com.teamplay.managers.GameStateManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created for TeamPlay
@@ -14,6 +16,8 @@ public class MenuState extends GameState {
     private Level level;
 
     private float scrollSpeed = 100.0f;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MenuState.class);
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
@@ -28,7 +32,7 @@ public class MenuState extends GameState {
     @Override
     public void update(float dt) {
         camera.position.x += scrollSpeed * dt;
-        System.out.println(camera.position.x);
+        LOGGER.debug(""+camera.position.x);
         if (camera.position.x > level.getLevelWidth() * 32) {
             scrollSpeed = -scrollSpeed;
         } else if (camera.position.x < 0) {

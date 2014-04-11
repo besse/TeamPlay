@@ -17,6 +17,8 @@ import static com.teamplay.managers.InputProcessor.isReleased;
 
 import com.teamplay.managers.InputProcessor;
 import com.teamplay.player.Player;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,6 +28,8 @@ import com.teamplay.player.Player;
  * To change this template use File | Settings | File Templates.
  */
 public class PlayState extends GameState {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayState.class);
 
     private Level level;
     private String cameradataString = "";
@@ -193,7 +197,7 @@ public class PlayState extends GameState {
         }
 
         if (isReleased(GameKey.SPACE)) {
-            System.out.println("Hurting the little fellah");
+            LOGGER.debug("Hurting the little fellah");
             player.decreaseHealth(5.0f);
         }
         InputProcessor.refresh();

@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.teamplay.data.Level;
 import com.teamplay.util.GameConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.List;
  * Time: 11:14 AM
  */
 public class Player {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(Player.class);
 
     //Debug rektanglar
 
@@ -213,7 +215,7 @@ public class Player {
         collidableTiles.addAll(level.getCollidableRectangles(startX, startY, endX, endY));
         for (Rectangle rectangle : level.getCollidableRectangles(startX, startY, endX, endY)) {
             if (boundingBox.overlaps(rectangle)) {
-                System.out.println("Vertikal check dy blir 0");
+                LOGGER.trace("Vertikal check dy blir 0");
                 deltaY = 0;
                 break;
             }
@@ -235,7 +237,7 @@ public class Player {
         collidableTiles = (level.getCollidableRectangles(startX, startY, endX, endY));
         for (Rectangle rectangle : level.getCollidableRectangles(startX, startY, endX, endY)) {
             if (boundingBox.overlaps(rectangle)) {
-                System.out.println("Horisontell check dx blir 0");
+                LOGGER.trace("Horisontell check dx blir 0");
 
                 deltaX = 0;
                 break;

@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamplay.managers.GameStateManager;
 import com.teamplay.managers.InputProcessor;
 import com.teamplay.managers.ResourceManager;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 /**
  * Main game container.
@@ -24,12 +26,12 @@ public class Game implements ApplicationListener {
     private final int HEIGHT = 240;
 
     private SpriteBatch spriteBatch;
-    private BitmapFont font;
     private GameStateManager gameStateManager;
     private OrthographicCamera camera;
     private OrthographicCamera hudCamera;
     private ResourceManager resourceManager;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(Game.class);
 
     @Override
     public void create() {
@@ -37,10 +39,10 @@ public class Game implements ApplicationListener {
         resourceManager = new ResourceManager();
 
         spriteBatch = new SpriteBatch();
-        font = new BitmapFont();
+        BitmapFont font = new BitmapFont();
         font.setColor(Color.GREEN);
 
-        System.out.println("Screen width: " + Gdx.graphics.getWidth());
+        LOGGER.debug("Screen width: " + Gdx.graphics.getWidth());
         camera = new OrthographicCamera();
         camera.setToOrtho(false, WIDTH, HEIGHT);
         hudCamera = new OrthographicCamera();
