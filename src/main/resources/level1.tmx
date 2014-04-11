@@ -129,6 +129,7 @@
    <properties>
     <property name="id" value="button1"/>
     <property name="trigger" value="door1"/>
+    <property name="direction" value="west"/>
    </properties>
   </object>
   <object name="door1" type="door" gid="30" x="96" y="384">
@@ -146,6 +147,7 @@
   <object name="button2" type="button" gid="15" x="96" y="192">
    <properties>
     <property name="id" value="button2"/>
+    <property name="direction" value="west"/>
    </properties>
   </object>
   <object name="door3" type="door" gid="30" x="96" y="128">

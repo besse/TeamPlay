@@ -73,14 +73,14 @@ public class Level {
             int x = (Integer) mapObject.getProperties().get("x");
             int y = (Integer) mapObject.getProperties().get("y");
             if (type.equals("door")) {
-
                 Direction direction = Direction.fromString((String) mapObject.getProperties().get("direction"));
                 DoorEntity doorEntity = new DoorEntity(x, y, direction);
                 levelObjects.add(doorEntity);
 
 
             } else if(type.equals("button")){
-                ButtonEntity buttonEntity = new ButtonEntity(x,y);
+                Direction direction = Direction.fromString((String) mapObject.getProperties().get("direction"));
+                ButtonEntity buttonEntity = new ButtonEntity(x,y, direction);
                 levelObjects.add(buttonEntity);
 
             }

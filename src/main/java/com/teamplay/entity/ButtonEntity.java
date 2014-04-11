@@ -14,8 +14,8 @@ public class ButtonEntity extends DrawableEntity {
 
     private static final String TEXTURE_FILE_NAME = "button.png";
 
-    public ButtonEntity(int x, int y) {
-        super(x, y, Direction.EAST, TEXTURE_FILE_NAME);
+    public ButtonEntity(int x, int y, Direction direction) {
+        super(x, y, direction, TEXTURE_FILE_NAME);
     }
 
     @Override

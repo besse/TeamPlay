@@ -19,12 +19,16 @@ public class InputProcessor extends InputAdapter {
     private static final Set<GameKey> releasedKeys = new HashSet<GameKey>();
 
 
+    public void keyDown(GameKey key){
+        downKeys.add(key);
+        pressedKeys.add(key);
+    }
+
     @Override
     public boolean keyDown(int keycode) {
         if (isValidKey(keycode)){
             GameKey key = GameKey.fromKeycode(keycode);
-            downKeys.add(key);
-            pressedKeys.add(key);
+            keyDown(key);
         }
         return true;
     }
@@ -33,12 +37,16 @@ public class InputProcessor extends InputAdapter {
         return GameKey.isValid(keycode);
     }
 
+    public void keyUp(GameKey key){
+        downKeys.remove(key);
+        releasedKeys.add(key);
+    }
+
     @Override
     public boolean keyUp(int keycode) {
         if (isValidKey(keycode)){
             GameKey key = GameKey.fromKeycode(keycode);
-            downKeys.remove(key);
-            releasedKeys.add(key);
+            keyUp(key);
         }
         return true;
     }
