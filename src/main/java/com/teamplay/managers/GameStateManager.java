@@ -18,26 +18,25 @@ public class GameStateManager {
 
     private GameState currentGameState;
 
-
-    public static final int MENU = 0;
-    public static final int PLAY = 102;
-
     public GameStateManager(Game game) {
         this.game = game;
-        setState(PLAY);
-
+        setState(State.PLAY);
     }
 
-    public void setState(int state) {
+    public void setState(State state) {
         if (currentGameState != null) {
             currentGameState.dispose();
         }
-        if (state == MENU) {
-            currentGameState = new MenuState(this);
-        } else if (state == PLAY) {
-            currentGameState = new PlayState(this);
+        switch (state){
+            case MENU:
+                currentGameState = new MenuState(this);
+                break;
+            case PLAY:
+                currentGameState = new PlayState(this);
+                break;
+            default:
+                throw new IllegalStateException("The state "+state.name() +" is not a valid gamestate");
         }
-
     }
 
     public void update(float dt) {
@@ -53,5 +52,9 @@ public class GameStateManager {
         return game;
     }
 
+    private enum State{
+        MENU,
+        PLAY
+    }
 
 }

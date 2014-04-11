@@ -8,7 +8,7 @@ import static com.teamplay.managers.InputProcessor.isPressed;
 import static com.teamplay.managers.InputProcessor.isReleased;
 import static org.junit.Assert.assertTrue;
 
-public class TestInputProcessor {
+public class InputProcessorTest {
 
     InputProcessor inputProcessor = new InputProcessor();
 
