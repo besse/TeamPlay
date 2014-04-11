@@ -12,6 +12,8 @@ import com.teamplay.entity.ButtonEntity;
 import com.teamplay.entity.DoorEntity;
 import com.teamplay.entity.Entity;
 import com.teamplay.navigation.Direction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,8 @@ import java.util.List;
  * Time: 3:08 PM
  */
 public class Level {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Level.class);
 
     private static final String LAYER_WALL = "walls";
     private static final int LAYER_FLOOR2 = 1;
@@ -68,27 +72,37 @@ public class Level {
           */
 
         for (MapObject mapObject : objectLayer.getObjects()) {
-
-            String type = (String) mapObject.getProperties().get("type");
             int x = (Integer) mapObject.getProperties().get("x");
             int y = (Integer) mapObject.getProperties().get("y");
-            if (type.equals("door")) {
-                Direction direction = Direction.fromString((String) mapObject.getProperties().get("direction"));
-                DoorEntity doorEntity = new DoorEntity(x, y, direction);
-                levelObjects.add(doorEntity);
 
+            Entity entity;
+            switch (typeOf(mapObject)){
+                case DOOR:
+                    entity = new DoorEntity(x, y, directionOf(mapObject));
+                    levelObjects.add(entity);
+                    break;
+                case BUTTON:
+                    entity = new ButtonEntity(x,y, directionOf(mapObject));
+                    levelObjects.add(entity);
+                    break;
 
-            } else if(type.equals("button")){
-                Direction direction = Direction.fromString((String) mapObject.getProperties().get("direction"));
-                ButtonEntity buttonEntity = new ButtonEntity(x,y, direction);
-                levelObjects.add(buttonEntity);
-
+                case START:
+                    //TODO: Not yet implemented
+                    LOGGER.warn("Entity start is not yet implemented");
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown entity type");
             }
-            String name = (String) mapObject.getProperties().get("name");
-
-
+            //TODO: Move levelObjects.add(entity) here when all entity-types are implemented!
         }
+    }
 
+    private EntityType typeOf(MapObject mapObject) {
+        return EntityType.fromString((String)mapObject.getProperties().get("type"));
+    }
+
+    public Direction directionOf(MapObject mapObject){
+        return Direction.fromString((String) mapObject.getProperties().get("direction"));
     }
 
     public OrthogonalTiledMapRenderer getTileMapRenderer() {
@@ -147,5 +161,20 @@ public class Level {
         }
 
         return rectangles;
+    }
+
+    private enum EntityType{
+        START,
+        DOOR,
+        BUTTON;
+
+        public static EntityType fromString(String typeAsString) {
+            for (EntityType type : values()){
+                if (type.name().compareToIgnoreCase(typeAsString) == 0){
+                    return type;
+                }
+            }
+            throw new IllegalArgumentException(typeAsString + " is not a valid entity type");
+        }
     }
 }
