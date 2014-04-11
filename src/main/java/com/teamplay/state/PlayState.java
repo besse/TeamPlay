@@ -7,13 +7,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.teamplay.data.Level;
+import com.teamplay.entity.DrawableEntity;
 import com.teamplay.entity.Entity;
-import com.teamplay.entity.StartingPosition;
 import com.teamplay.managers.CollisionManager;
 import com.teamplay.managers.GameKey;
 import com.teamplay.managers.GameStateManager;
 import static com.teamplay.managers.InputProcessor.isDown;
-import static com.teamplay.managers.InputProcessor.isPressed;
 import static com.teamplay.managers.InputProcessor.isReleased;
 
 import com.teamplay.managers.InputProcessor;
@@ -91,10 +90,8 @@ public class PlayState extends GameState {
 
         camera.update();
         spriteBatch.draw(player.getCurrentFrame(), player.getXPos(), player.getYPos());
-        for (Entity currentLevelObject : level.getLevelObjects()) {
-            if (currentLevelObject.isDrawable()){
-                currentLevelObject.getSprite().draw(spriteBatch);
-            }
+        for (DrawableEntity currentLevelObject : level.getDrawableLevelObjects()) {
+            currentLevelObject.getSprite().draw(spriteBatch);
         }
 
         spriteBatch.end();

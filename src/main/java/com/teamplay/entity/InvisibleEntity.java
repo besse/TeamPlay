@@ -32,9 +32,4 @@ public abstract class InvisibleEntity implements Entity {
     public float getX() {
         return x;
     }
-
-    @Override
-    public final boolean isDrawable() {
-        return false;
-    }
 }

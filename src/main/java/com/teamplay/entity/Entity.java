@@ -25,6 +25,4 @@ public interface Entity {
     float getY();
 
     float getX();
-
-    boolean isDrawable();
 }

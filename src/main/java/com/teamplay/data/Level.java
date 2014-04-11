@@ -8,10 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.teamplay.entity.ButtonEntity;
-import com.teamplay.entity.DoorEntity;
-import com.teamplay.entity.Entity;
-import com.teamplay.entity.StartingPosition;
+import com.teamplay.entity.*;
 import com.teamplay.navigation.Direction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +30,7 @@ public class Level {
     private static final int LAYER_FLOOR2 = 1;
     private static final int LAYER_FLOOR = 0;
 
-    private List<Entity> levelObjects;
+    private List<DrawableEntity> drawableLevelObjects;
 
     private List<StartingPosition> startingPositions = new ArrayList<StartingPosition>();
 
@@ -64,7 +61,7 @@ public class Level {
     }
 
     private void loadLevelObjects() {
-        levelObjects = new ArrayList<Entity>();
+        drawableLevelObjects = new ArrayList<DrawableEntity>();
         MapLayer objectLayer = tileMap.getLayers().get("objects");
 
         /*
@@ -78,23 +75,22 @@ public class Level {
             int x = (Integer) mapObject.getProperties().get("x");
             int y = (Integer) mapObject.getProperties().get("y");
 
-            Entity entity;
             switch (typeOf(mapObject)){
                 case DOOR:
-                    entity = new DoorEntity(x, y, directionOf(mapObject));
+                    drawableLevelObjects.add(new DoorEntity(x, y, directionOf(mapObject)));
                     break;
                 case BUTTON:
-                    entity = new ButtonEntity(x,y, directionOf(mapObject));
+                    drawableLevelObjects.add(new ButtonEntity(x, y, directionOf(mapObject)));
                     break;
                 case START:
                     StartingPosition startingPosition = new StartingPosition(x,y);
                     startingPositions.add(startingPosition);
-                    entity = startingPosition;
                     break;
                 default:
-                    throw new IllegalArgumentException("Unknown entity type");
+                    String errorString = "Unknown entity type "+typeOf(mapObject);
+                    LOGGER.error(errorString);
+                    throw new IllegalArgumentException(errorString);
             }
-            levelObjects.add(entity);
         }
     }
 
@@ -110,8 +106,8 @@ public class Level {
         return tileMapRenderer;
     }
 
-    public List<Entity> getLevelObjects() {
-        return levelObjects;
+    public List<DrawableEntity> getDrawableLevelObjects() {
+        return drawableLevelObjects;
     }
 
     public int getLevelHeight() {
