@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.teamplay.data.Level;
+import com.teamplay.entity.StartingPosition;
 import com.teamplay.util.GameConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,9 +50,16 @@ public class Player {
     private float health;
 
     public Player(float xPos, float yPos) {
+        init(xPos, yPos);
+    }
+
+    public Player(StartingPosition startingPosition) {
+        init(startingPosition.getX(), startingPosition.getY());
+    }
+
+    private final void init(float xPos, float yPos){
         this.xPos = xPos;
         this.yPos = yPos;
-
         walkSheet = new Texture(Gdx.files.internal("manwalking.png"));
         TextureRegion[][] tmp = TextureRegion.split(walkSheet, 32, 32);
 

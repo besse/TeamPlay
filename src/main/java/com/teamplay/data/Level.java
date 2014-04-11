@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.teamplay.entity.ButtonEntity;
 import com.teamplay.entity.DoorEntity;
 import com.teamplay.entity.Entity;
+import com.teamplay.entity.StartingPosition;
 import com.teamplay.navigation.Direction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,8 @@ public class Level {
     private static final int LAYER_FLOOR = 0;
 
     private List<Entity> levelObjects;
+
+    private List<StartingPosition> startingPositions = new ArrayList<StartingPosition>();
 
     private OrthogonalTiledMapRenderer tileMapRenderer;
 
@@ -79,21 +82,19 @@ public class Level {
             switch (typeOf(mapObject)){
                 case DOOR:
                     entity = new DoorEntity(x, y, directionOf(mapObject));
-                    levelObjects.add(entity);
                     break;
                 case BUTTON:
                     entity = new ButtonEntity(x,y, directionOf(mapObject));
-                    levelObjects.add(entity);
                     break;
-
                 case START:
-                    //TODO: Not yet implemented
-                    LOGGER.warn("Entity start is not yet implemented");
+                    StartingPosition startingPosition = new StartingPosition(x,y);
+                    startingPositions.add(startingPosition);
+                    entity = startingPosition;
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown entity type");
             }
-            //TODO: Move levelObjects.add(entity) here when all entity-types are implemented!
+            levelObjects.add(entity);
         }
     }
 
@@ -176,5 +177,12 @@ public class Level {
             }
             throw new IllegalArgumentException(typeAsString + " is not a valid entity type");
         }
+    }
+
+    public StartingPosition getStartingPosition(){
+        for (StartingPosition startingPosition : startingPositions){
+            return startingPosition;
+        }
+        throw new IllegalStateException("No starting position defined in map!");
     }
 }

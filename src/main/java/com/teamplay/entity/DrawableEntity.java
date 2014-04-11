@@ -39,5 +39,10 @@ public abstract class DrawableEntity implements Entity{
     public float getY() {
         return yPos;
     }
+
+    @Override
+    public final boolean isDrawable() {
+        return true;
+    }
 }
 

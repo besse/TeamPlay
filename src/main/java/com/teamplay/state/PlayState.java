@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.teamplay.data.Level;
 import com.teamplay.entity.Entity;
+import com.teamplay.entity.StartingPosition;
 import com.teamplay.managers.CollisionManager;
 import com.teamplay.managers.GameKey;
 import com.teamplay.managers.GameStateManager;
@@ -53,7 +54,8 @@ public class PlayState extends GameState {
         level = new Level("level1");
 
         font = new BitmapFont();
-        player = new Player(160, 120);
+
+        player = new Player(level.getStartingPosition());
 
         shapeRenderer = new ShapeRenderer();
 
@@ -90,7 +92,9 @@ public class PlayState extends GameState {
         camera.update();
         spriteBatch.draw(player.getCurrentFrame(), player.getXPos(), player.getYPos());
         for (Entity currentLevelObject : level.getLevelObjects()) {
-            currentLevelObject.getSprite().draw(spriteBatch);
+            if (currentLevelObject.isDrawable()){
+                currentLevelObject.getSprite().draw(spriteBatch);
+            }
         }
 
         spriteBatch.end();
