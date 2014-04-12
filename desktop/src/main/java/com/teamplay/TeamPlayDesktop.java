@@ -2,6 +2,7 @@ package com.teamplay;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.teamplay.input.MouseInputService;
 
 /**
  * Created with IntelliJ IDEA.

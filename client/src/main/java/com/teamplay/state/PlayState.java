@@ -6,14 +6,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.teamplay.KeyboardInputService;
 import com.teamplay.data.Level;
 import com.teamplay.entity.DrawableEntity;
-import com.teamplay.entity.Entity;
 import com.teamplay.input.InputService;
 import com.teamplay.input.intention.Intention;
 import com.teamplay.managers.CollisionManager;
-import com.teamplay.managers.GameKey;
 import com.teamplay.managers.GameStateManager;
 
 import com.teamplay.player.Player;
@@ -85,6 +82,7 @@ public class PlayState extends GameState {
         level.getTileMapRenderer().setView(camera);
 
         spriteBatch.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(camera.combined);
 
         level.getTileMapRenderer().render();
 
@@ -101,7 +99,7 @@ public class PlayState extends GameState {
         spriteBatch.end();
 
 
-        shapeRenderer.setProjectionMatrix(camera.combined);
+
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(0.5f, 0.5f, 0.5f, 1.0f);
         shapeRenderer.rect(player.getBoundingBox().getX(), player.getBoundingBox().getY(), player.getBoundingBox().getWidth(), player.getBoundingBox().getHeight());

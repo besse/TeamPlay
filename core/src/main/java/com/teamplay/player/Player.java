@@ -300,7 +300,7 @@ public class Player {
 
 
     public Position getPosition() {
-        return new Position();
+        return Position.fromPlayerCoordinates((int)xPos, (int)yPos);
     }
 
     public void accelerateX() {

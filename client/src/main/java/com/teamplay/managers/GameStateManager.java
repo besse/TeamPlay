@@ -1,19 +1,10 @@
 package com.teamplay.managers;
 
 import com.teamplay.Game;
-import com.teamplay.KeyboardInputService;
-import com.teamplay.input.InputService;
+import com.teamplay.state.PlayState;
 import com.teamplay.state.GameState;
 import com.teamplay.state.MenuState;
-import com.teamplay.state.PlayState;
 
-/**
- * Created with IntelliJ IDEA.
- * User: jonasbirgersson
- * Date: 2014-04-02
- * Time: 10:52 AM
- * To change this template use File | Settings | File Templates.
- */
 public class GameStateManager {
 
     private Game game;

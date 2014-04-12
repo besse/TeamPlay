@@ -23,7 +23,7 @@ public abstract class GameState {
 
 
     protected SpriteBatch spriteBatch;
-    protected OrthographicCamera camera;
+    public static OrthographicCamera camera;
     protected OrthographicCamera hudCamera;
 
     protected GameState(GameStateManager gsm){

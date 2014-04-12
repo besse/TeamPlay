@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamplay.input.InputService;
+import com.teamplay.input.KeyboardInputService;
+import com.teamplay.input.MouseInputService;
 import com.teamplay.managers.GameStateManager;
 import com.teamplay.managers.ResourceManager;
 import org.slf4j.LoggerFactory;
@@ -31,9 +33,14 @@ public class Game implements ApplicationListener {
     private OrthographicCamera hudCamera;
     private ResourceManager resourceManager;
 
-    private InputService inputService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Game.class);
+
+    private InputService inputService;
+
+    public Game(){
+
+    }
 
     @Override
     public void create() {
@@ -51,6 +58,7 @@ public class Game implements ApplicationListener {
         hudCamera.setToOrtho(false, WIDTH, HEIGHT);
 
         inputService = new KeyboardInputService();
+        //inputService = new MouseInputService(camera);
 
         Gdx.input.setInputProcessor(inputService);
 
