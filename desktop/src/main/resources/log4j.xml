@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE log4j:configuration SYSTEM "/home/christian/jonas/TeamPlay/client/src/main/resources/log4j.dtd">
+<!DOCTYPE log4j:configuration SYSTEM "/home/christian/jonas/TeamPlay/desktop/src/main/resources/log4j.dtd">
 <log4j:configuration>
 
     <appender name="Console" class="org.apache.log4j.ConsoleAppender">

@@ -25,7 +25,6 @@ public abstract class PositionBasedInputService extends InputService {
 
             int x = toMapCoordinateX(requestedX, requestedY, 0);
             int y = toMapCoordinateY(requestedX, requestedY, 0);
-            //LOGGER.debug("Player position:"+playerPosition.x+","+playerPosition.y + " Requested: "+x+","+y);
 
             if (x < playerPosition.x){
                 intentions.add(MoveIntention.EAST);

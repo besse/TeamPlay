@@ -63,7 +63,7 @@
                 <groupId>com.badlogicgames.gdx</groupId>
                 <artifactId>gdx-platform</artifactId>
                 <version>${gdx.version}</version>
-                <scope>compile</scope>
+                <scope>runtime</scope>
                 <classifier>natives-desktop</classifier>
             </dependency>
 
@@ -74,6 +74,22 @@
             </dependency>
 
             <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.5</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.17</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <!-- Test -->
+
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.11</version>
@@ -82,20 +98,6 @@
 
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>

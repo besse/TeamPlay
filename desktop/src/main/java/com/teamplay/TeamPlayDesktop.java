@@ -2,22 +2,19 @@ package com.teamplay;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.teamplay.input.MouseInputService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/**
- * Created with IntelliJ IDEA.
- * User: jonasbirgersson
- * Date: 2014-04-02
- * Time: 8:52 AM
- * To change this template use File | Settings | File Templates.
- */
 public class TeamPlayDesktop {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TeamPlayDesktop.class);
 
     public static void main(String[] args) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Drop";
         cfg.width = 640;
         cfg.height = 480;
+        LOGGER.debug("Starting app: "+cfg.title+" width:"+cfg.width+" height:"+cfg.height);
         new LwjglApplication(new Game(), cfg);
     }
 }
