@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.teamplay.data.Level;
 import com.teamplay.entity.StartingPosition;
+import com.teamplay.navigation.Position;
 import com.teamplay.util.GameConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,7 @@ public class Player {
 
     private float speed;
     private float health;
+    private final float acceleration = 20f;
 
     public Player(float xPos, float yPos) {
         init(xPos, yPos);
@@ -297,4 +299,28 @@ public class Player {
     }
 
 
+    public Position getPosition() {
+        return new Position();
+    }
+
+    public void accelerateX() {
+        accelerateX(10f);
+    }
+
+    public void accelerateY() {
+        accelerateY(10f);
+    }
+
+    public void stopX() {
+        deltaX = 0;
+    }
+
+
+    public void stopY() {
+        deltaY = 0;
+    }
+
+    public float getAcceleration() {
+        return acceleration;
+    }
 }

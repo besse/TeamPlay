@@ -6,17 +6,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.teamplay.KeyboardInputService;
 import com.teamplay.data.Level;
 import com.teamplay.entity.DrawableEntity;
 import com.teamplay.entity.Entity;
+import com.teamplay.input.InputService;
+import com.teamplay.input.intention.Intention;
 import com.teamplay.managers.CollisionManager;
 import com.teamplay.managers.GameKey;
 import com.teamplay.managers.GameStateManager;
-import static com.teamplay.managers.InputProcessor.isPressed;
-import static com.teamplay.managers.InputProcessor.isDown;
-import static com.teamplay.managers.InputProcessor.isReleased;
 
-import com.teamplay.managers.InputProcessor;
 import com.teamplay.player.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,13 +31,14 @@ public class PlayState extends GameState {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayState.class);
 
+    private InputService inputService;
+
     private Level level;
     private String cameradataString = "";
     private Player player;
 
 
     private BitmapFont font;
-    private float accel = 20.0f;
 
     private ShapeRenderer shapeRenderer;
     private CollisionManager collisionManager;
@@ -60,6 +60,9 @@ public class PlayState extends GameState {
         shapeRenderer = new ShapeRenderer();
 
         collisionManager = new CollisionManager(level);
+
+        inputService = game.getInputService();
+
     }
 
     @Override
@@ -171,38 +174,9 @@ public class PlayState extends GameState {
     @Override
     public void handleInput() {
 
-        if (isDown(GameKey.LEFT)){
-            player.accelerateX(-accel);
+        for (Intention intention : inputService.getPlayerIntention(player.getPosition())){
+            intention.invoke(level, player);
         }
-        if (isDown(GameKey.RIGHT)) {
-            player.accelerateX(accel);
-        }
-        if (isDown(GameKey.UP)) {
-            player.accelerateY(accel);
-        }
-        if (isDown(GameKey.DOWN)) {
-            player.accelerateY(-accel);
-        }
-
-        if (isReleased(GameKey.LEFT)) {
-            player.decelerateX();
-        }
-        if (isReleased(GameKey.RIGHT)) {
-            player.decelerateX();
-
-        }
-        if (isReleased(GameKey.UP)) {
-            player.decelerateY();
-        }
-        if (isReleased(GameKey.DOWN)) {
-            player.decelerateY();
-        }
-
-        if (isPressed(GameKey.SPACE)) {
-            level.trigger(player.getXPos(), player.getYPos());
-        }
-        InputProcessor.refresh();
-
     }
 
     @Override

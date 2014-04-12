@@ -1,6 +1,8 @@
 package com.teamplay.managers;
 
 import com.teamplay.Game;
+import com.teamplay.KeyboardInputService;
+import com.teamplay.input.InputService;
 import com.teamplay.state.GameState;
 import com.teamplay.state.MenuState;
 import com.teamplay.state.PlayState;
@@ -56,5 +58,4 @@ public class GameStateManager {
         MENU,
         PLAY
     }
-
 }

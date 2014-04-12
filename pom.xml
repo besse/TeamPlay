@@ -12,6 +12,7 @@
         <module>core</module>
         <module>desktop</module>
         <module>server</module>
+        <module>client</module>
     </modules>
 
     <properties>
@@ -35,6 +36,12 @@
             <dependency>
                 <groupId>com.teamplay</groupId>
                 <artifactId>core</artifactId>
+                <version>0.1.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.teamplay</groupId>
+                <artifactId>client</artifactId>
                 <version>0.1.0</version>
             </dependency>
 

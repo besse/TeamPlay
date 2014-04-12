@@ -6,29 +6,18 @@
         <artifactId>TeamPlay</artifactId>
         <groupId>TeamPlay</groupId>
         <version>0.1.0</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.teamplay</groupId>
-    <artifactId>core</artifactId>
+    <artifactId>client</artifactId>
     <version>0.1.0</version>
 
-    <dependencies>
 
+    <dependencies>
         <dependency>
             <groupId>com.teamplay</groupId>
             <artifactId>core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.badlogicgames.gdx</groupId>
-            <artifactId>gdx</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.badlogicgames.gdx</groupId>
-            <artifactId>gdx-backend-lwjgl</artifactId>
         </dependency>
     </dependencies>
 </project>

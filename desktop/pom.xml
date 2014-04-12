@@ -36,6 +36,11 @@
             <artifactId>core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.teamplay</groupId>
+            <artifactId>client</artifactId>
+        </dependency>
+
         <!-- Logging dependencies -->
 
         <dependency>
