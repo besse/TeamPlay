@@ -25,4 +25,6 @@ public interface Entity {
     float getY();
 
     float getX();
+
+    void changeState();
 }

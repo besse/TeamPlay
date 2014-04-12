@@ -12,6 +12,7 @@ import com.teamplay.entity.Entity;
 import com.teamplay.managers.CollisionManager;
 import com.teamplay.managers.GameKey;
 import com.teamplay.managers.GameStateManager;
+import static com.teamplay.managers.InputProcessor.isPressed;
 import static com.teamplay.managers.InputProcessor.isDown;
 import static com.teamplay.managers.InputProcessor.isReleased;
 
@@ -197,9 +198,8 @@ public class PlayState extends GameState {
             player.decelerateY();
         }
 
-        if (isReleased(GameKey.SPACE)) {
-            LOGGER.debug("Hurting the little fellah");
-            player.decreaseHealth(5.0f);
+        if (isPressed(GameKey.SPACE)) {
+            level.trigger(player.getXPos(), player.getYPos());
         }
         InputProcessor.refresh();
 

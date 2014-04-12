@@ -16,4 +16,9 @@ public class StartingPosition extends InvisibleEntity {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public void changeState() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
 }

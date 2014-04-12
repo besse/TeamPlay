@@ -31,6 +31,7 @@ public class Level {
     private static final int LAYER_FLOOR = 0;
 
     private List<DrawableEntity> drawableLevelObjects;
+    List<DoorEntity> doors = new ArrayList<DoorEntity>();
 
     private List<StartingPosition> startingPositions = new ArrayList<StartingPosition>();
 
@@ -49,13 +50,10 @@ public class Level {
     public void load(String name) {
         tileMap = new TmxMapLoader().load(name + ".tmx");
         tileMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
-        levelHeight = (Integer) tileMap.getProperties().get("height");
-        levelWidth = (Integer) tileMap.getProperties().get("width");
-        tileWidth = (Integer) tileMap.getProperties().get("tilewidth");
-        tileHeight = (Integer) tileMap.getProperties().get("tileheight");
-
-        tileMap.getProperties().get("width");
-        tileMap.getLayers().get("floor");
+        levelHeight = tileMap.getProperties().get("height", Integer.class);
+        levelWidth = tileMap.getProperties().get("width", Integer.class);
+        tileWidth = tileMap.getProperties().get("tilewidth", Integer.class);
+        tileHeight = tileMap.getProperties().get("tileheight", Integer.class);
 
         loadLevelObjects();
     }
@@ -64,23 +62,22 @@ public class Level {
         drawableLevelObjects = new ArrayList<DrawableEntity>();
         MapLayer objectLayer = tileMap.getLayers().get("objects");
 
-        /*
-
-         3 typer av objekt.
-
-         button, door, start
-          */
-
         for (MapObject mapObject : objectLayer.getObjects()) {
-            int x = (Integer) mapObject.getProperties().get("x");
-            int y = (Integer) mapObject.getProperties().get("y");
+            int x = mapObject.getProperties().get("x", Integer.class);
+            int y = mapObject.getProperties().get("y", Integer.class);
 
             switch (typeOf(mapObject)){
                 case DOOR:
-                    drawableLevelObjects.add(new DoorEntity(x, y, directionOf(mapObject)));
+                    DoorEntity door = new DoorEntity(x, y, directionOf(mapObject));
+                    drawableLevelObjects.add(door);
+                    doors.add(door);
                     break;
                 case BUTTON:
-                    drawableLevelObjects.add(new ButtonEntity(x, y, directionOf(mapObject)));
+                    ButtonEntity button = new ButtonEntity(x, y, directionOf(mapObject));
+                    for (DoorEntity doorEntity : doors){
+                        button.addConnectedEntity(doorEntity);
+                    }
+                    drawableLevelObjects.add(button);
                     break;
                 case START:
                     StartingPosition startingPosition = new StartingPosition(x,y);
@@ -95,11 +92,11 @@ public class Level {
     }
 
     private EntityType typeOf(MapObject mapObject) {
-        return EntityType.fromString((String)mapObject.getProperties().get("type"));
+        return EntityType.fromString(mapObject.getProperties().get("type", String.class));
     }
 
     public Direction directionOf(MapObject mapObject){
-        return Direction.fromString((String) mapObject.getProperties().get("direction"));
+        return Direction.fromString(mapObject.getProperties().get("direction", String.class));
     }
 
     public OrthogonalTiledMapRenderer getTileMapRenderer() {
@@ -139,7 +136,7 @@ public class Level {
     }
 
     public Rectangle getBoundsFrom(int x, int y) {
-        return new Rectangle(x * 32, y * 32, 32, 32);//To change body of created methods use File | Settings | File Templates.
+        return new Rectangle(x * 32, y * 32, 32, 32);
     }
 
     public List<Rectangle> getCollidableRectangles(float startX, float startY, float endX, float endY) {
@@ -151,13 +148,54 @@ public class Level {
 
         for (int j = yMin; j < yMax; j++) {
             for (int i = xMin; i < xMax; i++) {
-                if (!isTileWalkable(i, j)) {
+                if (!isTileWalkable(i, j) || hasClosedDoor(i,j)) {
                     rectangles.add(getBoundsFrom(i, j));
                 }
             }
         }
 
         return rectangles;
+    }
+
+    private boolean hasClosedDoor(int i, int j) {
+        for (DoorEntity door : doors){
+            LOGGER.trace("Looking for closed door @ " + i + "," + j);
+            if (toXTile(door.getX()) == i && toYTile(door.getY()) == j){
+                if (door.isClosed()){
+                    LOGGER.trace("Found closed door @ "+i+","+j);
+                    return true;
+                } else {
+                    LOGGER.trace("Found open door @ "+i+","+j);
+                    return false;
+                }
+            } else {
+                LOGGER.trace("Found no door @ "+i+","+j);
+            }
+        }
+        return false;
+    }
+
+    private int toYTile(float y) {
+        return (int)Math.floor(y/tileHeight);
+    }
+
+    private int toXTile(float x) {
+        return (int)Math.floor(x/tileWidth);
+    }
+
+    public void trigger(float xPos, float yPos) {
+        for (Entity entity : allEntities()){
+            if (toXTile(entity.getX()) == toXTile(xPos) && toYTile(entity.getY()) == toYTile(yPos)){
+                entity.trigger();
+            }
+        }
+    }
+
+    private List<Entity> allEntities() {
+        List<Entity> entites = new ArrayList<Entity>();
+        entites.addAll(drawableLevelObjects);
+        entites.addAll(startingPositions);
+        return entites;
     }
 
     private enum EntityType{

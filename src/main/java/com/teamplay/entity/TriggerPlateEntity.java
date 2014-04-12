@@ -54,6 +54,11 @@ public class TriggerPlateEntity implements Entity {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public void changeState() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public boolean isActive() {
         return active;
     }
