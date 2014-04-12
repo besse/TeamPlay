@@ -1,5 +1,7 @@
 package com.teamplay.entity;
 
+import com.badlogic.gdx.math.Rectangle;
+
 public class StartingPosition extends InvisibleEntity {
 
     public StartingPosition(int x, int y) {
@@ -20,5 +22,4 @@ public class StartingPosition extends InvisibleEntity {
     public void changeState() {
         //To change body of implemented methods use File | Settings | File Templates.
     }
-
 }

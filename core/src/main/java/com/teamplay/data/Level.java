@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.teamplay.entity.*;
 import com.teamplay.navigation.Direction;
+import com.teamplay.player.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -183,12 +184,16 @@ public class Level {
         return (int)Math.floor(x/tileWidth);
     }
 
-    public void trigger(float xPos, float yPos) {
+    public void trigger(Player player) {
         for (Entity entity : allEntities()){
-            if (toXTile(entity.getX()) == toXTile(xPos) && toYTile(entity.getY()) == toYTile(yPos)){
+            if (inRange(entity, player)){
                 entity.trigger();
             }
         }
+    }
+
+    private boolean inRange(Entity entity, Player player) {
+        return player.getBoundingBox().overlaps(entity.getBoundingBox());
     }
 
     private List<Entity> allEntities() {

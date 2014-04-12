@@ -6,7 +6,7 @@ import com.teamplay.player.Player;
 public class InteractIntention implements Intention {
     @Override
     public void invoke(Level level, Player player) {
-        level.trigger(player.getXPos(), player.getYPos());
+        level.trigger(player);
     }
     @Override
     public String toString(){

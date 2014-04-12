@@ -2,6 +2,7 @@ package com.teamplay.entity;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,4 +28,6 @@ public interface Entity {
     float getX();
 
     void changeState();
+
+    Rectangle getBoundingBox();
 }

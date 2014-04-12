@@ -3,6 +3,7 @@ package com.teamplay.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.teamplay.navigation.Direction;
 
 public abstract class DrawableEntity implements Entity{
@@ -39,5 +40,12 @@ public abstract class DrawableEntity implements Entity{
     public float getY() {
         return yPos;
     }
+
+    @Override
+    public Rectangle getBoundingBox() {
+        //Todo: Replace 32 with tile width and height
+        return new Rectangle(xPos, yPos, 32, 32);
+    }
+
 }
 

@@ -2,6 +2,7 @@ package com.teamplay.entity;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 
 public abstract class InvisibleEntity implements Entity {
 
@@ -32,4 +33,11 @@ public abstract class InvisibleEntity implements Entity {
     public float getX() {
         return x;
     }
+
+    @Override
+    public Rectangle getBoundingBox() {
+        //Todo: Replace 32 with tile width and height
+        return new Rectangle(x, y, 32, 32);
+    }
+
 }
