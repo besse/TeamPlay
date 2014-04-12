@@ -15,7 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created for TeamPlay
@@ -67,21 +69,22 @@ public class Level {
             int x = mapObject.getProperties().get("x", Integer.class);
             int y = mapObject.getProperties().get("y", Integer.class);
 
+            String name = mapObject.getName();
             switch (typeOf(mapObject)){
                 case DOOR:
-                    DoorEntity door = new DoorEntity(x, y, directionOf(mapObject));
+                    DoorEntity door = new DoorEntity(name, x, y, directionOf(mapObject));
                     drawableLevelObjects.add(door);
                     doors.add(door);
                     break;
                 case BUTTON:
-                    ButtonEntity button = new ButtonEntity(x, y, directionOf(mapObject));
-                    for (DoorEntity doorEntity : doors){
-                        button.addConnectedEntity(doorEntity);
+                    ButtonEntity button = new ButtonEntity(name, x, y, directionOf(mapObject));
+                    for (Entity connectedEntity : getConnectedEntities(mapObject)){
+                        button.addConnectedEntity(connectedEntity);
                     }
                     drawableLevelObjects.add(button);
                     break;
                 case START:
-                    StartingPosition startingPosition = new StartingPosition(x,y);
+                    StartingPosition startingPosition = new StartingPosition(name, x,y);
                     startingPositions.add(startingPosition);
                     break;
                 default:
@@ -90,6 +93,19 @@ public class Level {
                     throw new IllegalArgumentException(errorString);
             }
         }
+    }
+
+    private Set<Entity> getConnectedEntities(MapObject mapObject) {
+        Set<Entity> connectedEntities = new HashSet<Entity>();
+        if (mapObject.getProperties().containsKey("trigger")){
+            String connectedEntityName = mapObject.getProperties().get("trigger", String.class);
+            for (Entity entity : drawableLevelObjects){
+                if (connectedEntityName.equals(entity.getName())){
+                    connectedEntities.add(entity);
+                }
+            }
+        }
+        return connectedEntities;
     }
 
     private EntityType typeOf(MapObject mapObject) {
@@ -201,6 +217,12 @@ public class Level {
         entites.addAll(drawableLevelObjects);
         entites.addAll(startingPositions);
         return entites;
+    }
+
+    public void update(float dt) {
+        for (DrawableEntity entity : drawableLevelObjects){
+            entity.update(dt);
+        }
     }
 
     private enum EntityType{

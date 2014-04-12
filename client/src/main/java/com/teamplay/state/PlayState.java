@@ -67,6 +67,8 @@ public class PlayState extends GameState {
 
         handleInput();
 
+        level.update(dt);
+
         //Updaterar player med collisions..
         player.checkCollisionWithBlocks(dt, level);
         player.update(dt);

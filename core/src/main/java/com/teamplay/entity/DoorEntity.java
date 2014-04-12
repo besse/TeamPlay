@@ -19,8 +19,8 @@ public class DoorEntity extends DrawableEntity {
 
     private static final String TEXTURE_FILE_NAME = "door.png";
 
-    public DoorEntity(int x, int y, Direction direction) {
-        super(x, y, direction, TEXTURE_FILE_NAME);
+    public DoorEntity(String name, int x, int y, Direction direction) {
+        super(name, x, y, direction, TEXTURE_FILE_NAME);
 
     }
 

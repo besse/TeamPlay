@@ -30,4 +30,6 @@ public interface Entity {
     void changeState();
 
     Rectangle getBoundingBox();
+
+    String getName();
 }

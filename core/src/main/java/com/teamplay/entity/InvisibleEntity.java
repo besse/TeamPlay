@@ -6,10 +6,13 @@ import com.badlogic.gdx.math.Rectangle;
 
 public abstract class InvisibleEntity implements Entity {
 
-    float x;
-    float y;
+    private final String name;
 
-    InvisibleEntity(float x, float y){
+    private float x;
+    private float y;
+
+    InvisibleEntity(String name, float x, float y){
+        this.name = name;
         this.x = x;
         this.y = y;
     }
@@ -38,6 +41,11 @@ public abstract class InvisibleEntity implements Entity {
     public Rectangle getBoundingBox() {
         //Todo: Replace 32 with tile width and height
         return new Rectangle(x, y, 32, 32);
+    }
+
+    @Override
+    public String getName(){
+        return name;
     }
 
 }

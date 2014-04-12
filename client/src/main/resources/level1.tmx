@@ -125,16 +125,9 @@
     <property name="id" value="door2"/>
    </properties>
   </object>
-  <object name="button1" type="button" gid="15" x="96" y="448">
-   <properties>
-    <property name="id" value="button1"/>
-    <property name="trigger" value="door1"/>
-    <property name="direction" value="west"/>
-   </properties>
-  </object>
   <object name="door1" type="door" gid="30" x="96" y="384">
    <properties>
-    <property name="direction" value="west"/>
+    <property name="direction" value="east"/>
     <property name="id" value="door1"/>
    </properties>
   </object>
@@ -144,18 +137,26 @@
     <property name="id" value="door3"/>
    </properties>
   </object>
-  <object name="button2" type="button" gid="15" x="96" y="192">
-   <properties>
-    <property name="id" value="button2"/>
-    <property name="direction" value="west"/>
-   </properties>
-  </object>
   <object name="door3" type="door" gid="30" x="96" y="128">
    <properties>
     <property name="direction" value="west"/>
     <property name="id" value="door3"/>
    </properties>
   </object>
+  <object name="button1" type="button" gid="15" x="96" y="448">
+       <properties>
+        <property name="id" value="button1"/>
+        <property name="trigger" value="door3"/>
+        <property name="direction" value="east"/>
+       </properties>
+  </object>
+  <object name="button2" type="button" gid="15" x="96" y="192">
+     <properties>
+      <property name="id" value="button2"/>
+      <property name="direction" value="east"/>
+      <property name="trigger" value="door2"/>
+     </properties>
+    </object>
   <object name="start1" type="start" x="32" y="32" width="32" height="32">
    <ellipse/>
   </object>

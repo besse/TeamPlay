@@ -13,10 +13,13 @@ public abstract class DrawableEntity implements Entity{
     protected final float yPos;
     protected final Direction direction;
 
-    protected final Texture texture;
-    protected final Sprite sprite;
+    private final String name;
 
-    public DrawableEntity(int x, int y, Direction direction, String textureFileName) {
+    private Texture texture;
+    private final Sprite sprite;
+
+    public DrawableEntity(String name, int x, int y, Direction direction, String textureFileName) {
+        this.name = name;
         this.xPos = x;
         this.yPos = y;
         this.direction = direction;
@@ -47,5 +50,14 @@ public abstract class DrawableEntity implements Entity{
         return new Rectangle(xPos, yPos, 32, 32);
     }
 
+    protected void setTextureFileName(String textureFileName){
+        texture = new Texture(Gdx.files.internal(textureFileName));
+        sprite.setTexture(texture);
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
 }
 

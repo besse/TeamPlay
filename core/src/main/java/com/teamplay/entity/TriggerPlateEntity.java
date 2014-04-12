@@ -66,6 +66,11 @@ public class TriggerPlateEntity implements Entity {
         return new Rectangle(0, 0, 32, 32);
     }
 
+    @Override
+    public String getName() {
+        return "TriggerPlate"+toString();
+    }
+
     public boolean isActive() {
         return active;
     }
