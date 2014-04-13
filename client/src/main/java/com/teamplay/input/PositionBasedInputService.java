@@ -3,7 +3,10 @@ package com.teamplay.input;
 import com.teamplay.input.intention.Intention;
 import com.teamplay.input.intention.MoveIntention;
 import com.teamplay.input.intention.StopIntention;
+import com.teamplay.menu.Menu;
+import com.teamplay.menu.MenuOption;
 import com.teamplay.navigation.Position;
+import org.lwjgl.util.Rectangle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,5 +56,11 @@ public abstract class PositionBasedInputService extends InputService {
         requestedX = screenX;
         requestedY = screenY;
         return true;
+    }
+
+    @Override
+    public Set<Intention> getMenuIntention(Menu menu) {
+        return new HashSet<Intention>();
+
     }
 }

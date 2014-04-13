@@ -1,6 +1,7 @@
 package com.teamplay.input;
 
 import com.teamplay.input.intention.*;
+import com.teamplay.menu.Menu;
 import com.teamplay.navigation.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +60,7 @@ public class KeyboardInputService extends InputService {
                     intentions.add(new InteractIntention());
                     break;
                 case ESCAPE:
-                    intentions.add(new CancelIntention());
+                    intentions.add(cancelIntention);
                     break;
             }
         }
@@ -99,10 +100,43 @@ public class KeyboardInputService extends InputService {
         pressedKeys.clear();
         releasedKeys.clear();
 
-        for (Intention intention : intentions){
-            LOGGER.trace(intention.toString());
+        if (LOGGER.isTraceEnabled()){
+            for (Intention intention : intentions){
+                LOGGER.trace(intention.toString());
+            }
         }
 
+        return intentions;
+    }
+
+    @Override
+    public Set<Intention> getMenuIntention(Menu menu) {
+        Set<Intention> intentions = new HashSet<Intention>();
+        for (KeyboardKey keyPressed : pressedKeys){
+            switch (keyPressed){
+                case UP:
+                    intentions.add(MoveIntention.NORTH);
+                    break;
+                case DOWN:
+                    intentions.add(MoveIntention.SOUTH);
+                    break;
+                case ESCAPE:
+                    intentions.add(new CancelIntention());
+                    break;
+                case SPACE:
+                case ENTER:
+                    intentions.add(new InteractIntention());
+                    break;
+            }
+        }
+        pressedKeys.clear();
+        releasedKeys.clear();
+
+        if (LOGGER.isTraceEnabled()){
+            for (Intention intention : intentions){
+                LOGGER.trace("MENU: " + intention.toString());
+            }
+        }
 
         return intentions;
     }

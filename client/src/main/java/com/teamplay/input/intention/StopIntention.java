@@ -1,6 +1,7 @@
 package com.teamplay.input.intention;
 
 import com.teamplay.data.Level;
+import com.teamplay.menu.Menu;
 import com.teamplay.navigation.Direction;
 import com.teamplay.player.Player;
 
@@ -28,6 +29,11 @@ public class StopIntention implements Intention{
                 player.stopX();
                 break;
         }
+    }
+
+    @Override
+    public void invoke(Menu menu) {
+
     }
 
     @Override

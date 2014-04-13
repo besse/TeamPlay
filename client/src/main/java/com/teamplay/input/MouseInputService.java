@@ -2,8 +2,11 @@ package com.teamplay.input;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
+import com.teamplay.input.intention.Intention;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Set;
 
 public class MouseInputService extends PositionBasedInputService {
     private final static Logger LOGGER = LoggerFactory.getLogger(MouseInputService.class);

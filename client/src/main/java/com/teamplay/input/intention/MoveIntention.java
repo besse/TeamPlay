@@ -1,6 +1,7 @@
 package com.teamplay.input.intention;
 
 import com.teamplay.data.Level;
+import com.teamplay.menu.Menu;
 import com.teamplay.navigation.Direction;
 import com.teamplay.player.Player;
 
@@ -33,6 +34,18 @@ public class MoveIntention implements Intention {
                 break;
             case WEST:
                 player.accelerateX(acceleration);
+                break;
+        }
+    }
+
+    @Override
+    public void invoke(Menu menu) {
+        switch (direction){
+            case NORTH:
+                menu.moveUp();
+                break;
+            case SOUTH:
+                menu.moveDown();
                 break;
         }
     }

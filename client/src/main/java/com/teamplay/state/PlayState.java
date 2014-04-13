@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.teamplay.data.Level;
 import com.teamplay.entity.DrawableEntity;
 import com.teamplay.input.InputService;
+import com.teamplay.input.intention.CancelIntention;
 import com.teamplay.input.intention.Intention;
 import com.teamplay.managers.CollisionManager;
 import com.teamplay.managers.GameStateManager;
@@ -59,6 +60,13 @@ public class PlayState extends GameState {
         collisionManager = new CollisionManager(level);
 
         inputService = game.getInputService();
+
+        inputService.setCancelIntention(new CancelIntention(){
+            @Override
+            public void invoke(Level l, Player p){
+                gsm.setState(GameStateManager.State.MENU);
+            }
+        });
 
     }
 

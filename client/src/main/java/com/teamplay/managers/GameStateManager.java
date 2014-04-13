@@ -13,7 +13,7 @@ public class GameStateManager {
 
     public GameStateManager(Game game) {
         this.game = game;
-        setState(State.PLAY);
+        setState(State.MENU);
     }
 
     public void setState(State state) {
@@ -45,7 +45,7 @@ public class GameStateManager {
         return game;
     }
 
-    private enum State{
+    public enum State{
         MENU,
         PLAY
     }
