@@ -15,12 +15,7 @@
     <version>0.1.0</version>
 
     <dependencies>
-
-        <dependency>
-            <groupId>com.teamplay</groupId>
-            <artifactId>core</artifactId>
-        </dependency>
-
+        
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx</artifactId>
